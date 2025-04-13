@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FoodController;
+use App\Http\Controllers\OrderItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('customers','CustomerController');
-Route::resource('categories','CategoryController');
-Route::resource('foods','FoodController');
-Route::resource('orders','OrderController');
+Route::resource('customers',CustomerController::class);
+Route::resource('categories',CategoryController::class);
+Route::resource('foods',FoodController::class);
+Route::resource('orders',OrderItemController::class);
