@@ -9,10 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('order_items', function (Blueprint $table) {
+        Schema::create('order_status', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('transactions_id')->constrained('transactions');
+            $table->enum('status_type', ['pending', 'processing', 'ready', 'cancelled']);
             $table->timestamps();
         });
     }
@@ -22,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_items');
+        Schema::dropIfExists('order_status');
     }
 };
