@@ -23,27 +23,32 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('customers',CustomerController::class);
-Route::resource('categories',CategoryController::class);
-Route::resource('menus', MenuController::class);
+Route::resource('admin/customers',CustomerController::class);
+Route::resource('admin/categories',CategoryController::class);
+Route::resource('admin/menus', MenuController::class);
 
-Route::prefix('transactions')->name('admin.transactions.')->group(function () {
-    Route::get('/', [TransactionController::class, 'index'])->name('index');
-    Route::get('/create', [TransactionController::class, 'create'])->name('create');
-    Route::post('/', [TransactionController::class, 'store'])->name('store');
-    Route::get('/{id}', [TransactionController::class, 'show'])->name('show');
-    Route::get('/{id}/edit', [TransactionController::class, 'edit'])->name('edit');
-    Route::put('/{id}', [TransactionController::class, 'update'])->name('update');
-    Route::delete('/{id}', [TransactionController::class, 'destroy'])->name('destroy');
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    
+    Route::prefix('transactions')->name('transactions.')->group(function () {
+        Route::get('/', [TransactionController::class, 'index'])->name('index');
+        Route::get('/create', [TransactionController::class, 'create'])->name('create');
+        Route::post('/', [TransactionController::class, 'store'])->name('store');
+        Route::get('/{id}', [TransactionController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [TransactionController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [TransactionController::class, 'update'])->name('update');
+        Route::delete('/{id}', [TransactionController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('detail-transactions')->name('detail-transactions.')->group(function () {
+        Route::get('/', [DetailTransactionController::class, 'index'])->name('index');
+        Route::get('/create', [DetailTransactionController::class, 'create'])->name('create');
+        Route::post('/', [DetailTransactionController::class, 'store'])->name('store');
+        Route::get('/{id}', [DetailTransactionController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [DetailTransactionController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [DetailTransactionController::class, 'update'])->name('update');
+        Route::delete('/{id}', [DetailTransactionController::class, 'destroy'])->name('destroy');
+    });
+
 });
 
-
-Route::prefix('detail-transactions')->name('admin.detail-transactions.')->group(function () {
-    Route::get('/', [DetailTransactionController::class, 'index'])->name('index');
-    Route::get('/create', [DetailTransactionController::class, 'create'])->name('create');
-    Route::post('/', [DetailTransactionController::class, 'store'])->name('store');
-    Route::get('/{id}', [DetailTransactionController::class, 'show'])->name('show');
-    Route::get('/{id}/edit', [DetailTransactionController::class, 'edit'])->name('edit');
-    Route::put('/{id}', [DetailTransactionController::class, 'update'])->name('update');
-    Route::delete('/{id}', [DetailTransactionController::class, 'destroy'])->name('destroy');
-});
