@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
-use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Http\Request;
 
 class MenuController extends Controller
 {
@@ -13,9 +13,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        //eloquent
-        $listMenu = Menu::all();
-
+        $listMenu = Menu::with('category')->get();
         return view('admin.menus.index', compact('listMenu'));
     }
 
@@ -24,7 +22,8 @@ class MenuController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('admin.menus.create', compact('categories'));
     }
 
     /**
@@ -32,69 +31,69 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name'            => 'required|string|max:50',
+            'description'     => 'required|string|max:255',
+            'nutrition_fact'  => 'nullable|string|max:255',
+            'price'           => 'required|numeric',
+            'stock'           => 'required|integer',
+            'image_path'      => 'nullable|string|max:255',
+            'categories_id'   => 'required|exists:categories,id',
+        ]);
+
+        Menu::create($validated);
+
+        return redirect()->route('menus.index')->with('success', 'Menu berhasil ditambahkan!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($menu)
+    public function show($id)
     {
-        //eloquent
-        $menu = Menu::find($menu);
+        $menu = Menu::findOrFail($id);
         return view('admin.menus.show', compact('menu'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
         $menu = Menu::findOrFail($id);
-        $categories = Category::all(); // untuk select kategori
+        $categories = Category::all();
         return view('admin.menus.edit', compact('menu', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        $menu = Menu::findOrFail($id);
-
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
-            'categories_id' => 'required',
+        $validated = $request->validate([
+            'name'            => 'required|string|max:50',
+            'description'     => 'required|string|max:255',
+            'nutrition_fact'  => 'nullable|string|max:255',
+            'price'           => 'required|numeric',
+            'stock'           => 'required|integer',
+            'image_path'      => 'nullable|string|max:255',
+            'categories_id'   => 'required|exists:categories,id',
         ]);
 
-        $data = $request->only('name', 'description', 'nutrition_fact', 'price', 'stock', 'categories_id');
+        $menu = Menu::findOrFail($id);
+        $menu->update($validated);
 
-        // Update gambar jika ada
-        if ($request->hasFile('image_path')) {
-            $data['image_path'] = $request->file('image_path')->store('menus', 'public');
-        }
-
-        $menu->update($data);
-
-        return redirect()->route('menus.index')->with('successUp', 'Menu berhasil diperbarui.');
+        return redirect()->route('menus.index')->with('success', 'Menu berhasil diupdate!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         $menu = Menu::findOrFail($id);
-
-        // Jika relasi pivot -> detach ingredient-nya dulu
-        $menu->ingredients()->detach();
-
-        // Lalu hapus menu-nya
         $menu->delete();
 
-        return redirect()->route('menus.index')->with('successDel', 'Menu berhasil dihapus.');
+        return redirect()->route('menus.index')->with('success', 'Menu berhasil dihapus!');
     }
 }

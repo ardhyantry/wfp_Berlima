@@ -7,6 +7,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\DetailTransactionController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,7 @@ Route::resource('admin/customers',CustomerController::class);
 Route::resource('admin/categories',CategoryController::class);
 Route::resource('admin/menus', MenuController::class);
 
-
+Route::resource('admin/users', UserController::class);
 Route::prefix('admin')->name('admin.')->group(function () {
     
     Route::prefix('transactions')->name('transactions.')->group(function () {

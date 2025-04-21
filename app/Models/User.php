@@ -9,6 +9,15 @@ class User extends Authenticatable
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'email',
+        'phone_number',
+        'username',
+        'password',
+    ];
+    
+
     public function transactions()
     {
         return $this->hasMany(Transaction::class, 'users_id');
