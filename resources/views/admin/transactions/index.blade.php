@@ -18,6 +18,8 @@
                 <th>User ID</th>
                 <th>Created At</th>
                 <th>Updated At</th>
+                <th>Actions</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -33,10 +35,19 @@
                 <td>{{ $tx->users_id }}</td>
                 <td>{{ $tx->created_at }}</td>
                 <td>{{ $tx->updated_at }}</td>
+                <td>
+                    <a href="{{ route('admin.transactions.show', $tx->id) }}" class="btn btn-info">View</a>
+                    <a href="{{ route('admin.transactions.edit', $tx->id) }}" class="btn btn-warning">Edit</a>
+                    <form action="{{ route('admin.transactions.destroy', $tx->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
             </tr>
             @endforeach
         </tbody>
     </table>
 </div>
+<a href="{{ route('admin.transactions.create') }}" class="btn btn-primary">Add Transaction</a>
 
 @endsection

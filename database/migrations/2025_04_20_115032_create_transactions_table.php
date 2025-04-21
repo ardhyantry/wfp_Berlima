@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->double('subtotal');
-            $table->double('disco   unt')->default(0);
+            $table->double('discount')->default(0);
             $table->double('total');
             $table->enum('order_type', ['dine_in', 'take_away']);
             $table->enum('payment_type', ['QRIS', 'credit_card', 'debit_card', 'e_wallet']);

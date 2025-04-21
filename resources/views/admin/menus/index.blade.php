@@ -62,6 +62,8 @@
                     <td colspan="6" class="text-center">Total Foods: {{ $listMenu->count() }}</td>
                 </tr>
         </table>
+        {{-- button create menu route --}}
+        <a href="{{ route('menus.create') }}" class="btn btn-primary">Create Menu</a>
     </div>
 
     <!-- Delete Modal -->

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
@@ -37,11 +38,11 @@ class CustomerController extends Controller
     {
         //validate request
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'phone' => 'required|string|max:15',
-            'address' => 'required|string|max:255',
+            'name'         => 'required|string|max:50',
+            'email'        => 'required|email|unique:users,email',
+            'phone_number' => 'required|string|max:25',
+            'username'     => 'required|string|max:45|unique:users,username',
+            'password'     => 'required|string|min:6',
         ]);
 
         //create user
@@ -49,12 +50,12 @@ class CustomerController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => bcrypt($validated['password']),
-            'phone' => $validated['phone'],
-            'address' => $validated['address'],
+            'phone_number' => $validated['phone_number'],
+            'username' => $validated['username'],
             'role' => 'customer',
         ]);
 
-        return redirect()->route('admin.customers.index')->with('success', 'Customer created successfully.');
+        return redirect()->route('customers.index')->with('success', 'Customer created successfully.');
     }
 
     /**
@@ -62,7 +63,8 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('admin.customers.show', compact('user'));
     }
 
     /**
@@ -70,7 +72,8 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('admin.customers.edit', compact('user'));
     }
 
     /**
@@ -78,7 +81,25 @@ class CustomerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'name'         => 'required|string|max:50',
+            'email'        => 'required|email|unique:users,email,'.$id,
+            'phone_number' => 'required|string|max:25',
+            'username'     => 'required|string|max:45|unique:users,username,'.$id,
+            'password'     => 'nullable|string|min:6',
+        ]);
+
+        $user = User::findOrFail($id);
+
+        if ($validated['password']) {
+            $validated['password'] = Hash::make($validated['password']);
+        } else {
+            unset($validated['password']);
+        }
+
+        $user->update($validated);
+
+        return redirect()->route('customers.index')->with('success', 'Customer berhasil diupdate!');
     }
 
     /**
@@ -86,6 +107,10 @@ class CustomerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+    
+        $user->delete();
+
+        return redirect()->route('customers.index')->with('success', 'Customer berhasil dihapus!');
     }
 }
