@@ -59,6 +59,10 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Customer List
                             </a>
+                            <a class="nav-link" href="{{ route('admin.transactions.index') }}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Transactions List
+                            </a>
                         </div>
                     </div>
                 </nav>

@@ -5,8 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\Web\TransactionController;
-use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\Web\DetailTransactionController;
 
 /*
@@ -28,8 +27,8 @@ Route::resource('customers',CustomerController::class);
 Route::resource('categories',CategoryController::class);
 Route::resource('menus', MenuController::class);
 Route::resource('orders',OrderController::class);
-Route::resource('orders',OrderItemController::class);
-Route::prefix('transactions')->name('web.transactions.')->group(function () {
+
+Route::prefix('transactions')->name('admin.transactions.')->group(function () {
     Route::get('/', [TransactionController::class, 'index'])->name('index');
     Route::get('/create', [TransactionController::class, 'create'])->name('create');
     Route::post('/', [TransactionController::class, 'store'])->name('store');

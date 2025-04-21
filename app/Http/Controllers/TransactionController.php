@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Transaction;
@@ -12,13 +12,13 @@ class TransactionController extends Controller
     public function index()
     {
         $transactions = Transaction::with('user')->latest()->get();
-        return view('transactions.index', compact('transactions'));
+        return view('admin.transactions.index', compact('transactions'));
     }
 
     public function create()
     {
         $users = User::all();
-        return view('transactions.create', compact('users'));
+        return view('admin.transactions.create', compact('users'));
     }
 
     public function store(Request $request)
