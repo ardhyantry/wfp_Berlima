@@ -6,26 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up()
+    public function up(): void
     {
         Schema::create('detail_transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('transactions_id')->constrained('transactions');
-            $table->foreignId('menus_id')->constrained('menus');
-            $table->double('portion_size')->default(1);
+            $table->foreignId('transactions_id')->constrained('transactions')->onDelete('cascade');
+            $table->foreignId('menus_id')->constrained('menus')->onDelete('cascade');
+            $table->enum('portion_size', ['small', 'medium', 'large']);
             $table->integer('quantity');
             $table->double('total');
-            $table->string('notes', 255)->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('detail_transactions');

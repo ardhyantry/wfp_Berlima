@@ -13,7 +13,7 @@ class DetailTransactionSeeder extends Seeder
             [
                 'transactions_id' => 1,
                 'menus_id' => 1,
-                'portion_size' => 1,
+                'portion_size' => 'small',
                 'quantity' => 1,
                 'total' => 25000,
                 'notes' => 'Pedas level 2',
@@ -23,7 +23,7 @@ class DetailTransactionSeeder extends Seeder
             [
                 'transactions_id' => 1,
                 'menus_id' => 2,
-                'portion_size' => 1,
+                'portion_size' => 'medium',
                 'quantity' => 1,
                 'total' => 8000,
                 'notes' => 'Es sedikit',
@@ -33,7 +33,7 @@ class DetailTransactionSeeder extends Seeder
             [
                 'transactions_id' => 2,
                 'menus_id' => 1,
-                'portion_size' => 1,
+                'portion_size' => 'large',
                 'quantity' => 1,
                 'total' => 25000,
                 'notes' => 'Tidak pedas',

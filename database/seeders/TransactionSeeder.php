@@ -16,6 +16,7 @@ class TransactionSeeder extends Seeder
                 'total' => 33000,
                 'order_type' => 'take_away',
                 'payment_type' => 'qris',
+                'status' => 'pending',
                 'users_id' => 2,
                 'created_at' => now()->subDays(2),
                 'updated_at' => now()->subDays(2)
@@ -26,6 +27,7 @@ class TransactionSeeder extends Seeder
                 'total' => 35000,
                 'order_type' => 'dine_in',
                 'payment_type' => 'e_wallet',
+                'status' => 'processing',
                 'users_id' => 2,
                 'created_at' => now()->subDay(),
                 'updated_at' => now()->subDay()

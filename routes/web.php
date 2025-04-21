@@ -5,6 +5,9 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\Web\TransactionController;
+use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\Web\DetailTransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +28,24 @@ Route::resource('customers',CustomerController::class);
 Route::resource('categories',CategoryController::class);
 Route::resource('menus', MenuController::class);
 Route::resource('orders',OrderController::class);
+Route::resource('orders',OrderItemController::class);
+Route::prefix('transactions')->name('web.transactions.')->group(function () {
+    Route::get('/', [TransactionController::class, 'index'])->name('index');
+    Route::get('/create', [TransactionController::class, 'create'])->name('create');
+    Route::post('/', [TransactionController::class, 'store'])->name('store');
+    Route::get('/{id}', [TransactionController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [TransactionController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [TransactionController::class, 'update'])->name('update');
+    Route::delete('/{id}', [TransactionController::class, 'destroy'])->name('destroy');
+});
+
+
+Route::prefix('detail-transactions')->name('web.detail-transactions.')->group(function () {
+    Route::get('/', [DetailTransactionController::class, 'index'])->name('index');
+    Route::get('/create', [DetailTransactionController::class, 'create'])->name('create');
+    Route::post('/', [DetailTransactionController::class, 'store'])->name('store');
+    Route::get('/{id}', [DetailTransactionController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [DetailTransactionController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [DetailTransactionController::class, 'update'])->name('update');
+    Route::delete('/{id}', [DetailTransactionController::class, 'destroy'])->name('destroy');
+});
