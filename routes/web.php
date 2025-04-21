@@ -6,7 +6,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\Web\DetailTransactionController;
+use App\Http\Controllers\DetailTransactionController;
 
 /*
 |--------------------------------------------------------------------------
