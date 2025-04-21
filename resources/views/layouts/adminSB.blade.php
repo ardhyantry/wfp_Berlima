@@ -61,15 +61,15 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Category List
                         </a>
-                        <a class="nav-link" href="{{ route('orders.index') }}">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Order List
-                        </a>
                         <a class="nav-link" href="{{ route('customers.index') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Customer List
                         </a>
                         <a class="nav-link" href="{{ route('admin.transactions.index') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Transactions List
+                        </a>
+                        <a class="nav-link" href="{{ route('admin.detail-transactions.index') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Transactions List
                         </a>

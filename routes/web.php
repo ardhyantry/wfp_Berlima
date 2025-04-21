@@ -26,7 +26,6 @@ Route::get('/', function () {
 Route::resource('customers',CustomerController::class);
 Route::resource('categories',CategoryController::class);
 Route::resource('menus', MenuController::class);
-Route::resource('orders',OrderController::class);
 
 Route::prefix('transactions')->name('admin.transactions.')->group(function () {
     Route::get('/', [TransactionController::class, 'index'])->name('index');
@@ -39,7 +38,7 @@ Route::prefix('transactions')->name('admin.transactions.')->group(function () {
 });
 
 
-Route::prefix('detail-transactions')->name('web.detail-transactions.')->group(function () {
+Route::prefix('detail-transactions')->name('admin.detail-transactions.')->group(function () {
     Route::get('/', [DetailTransactionController::class, 'index'])->name('index');
     Route::get('/create', [DetailTransactionController::class, 'create'])->name('create');
     Route::post('/', [DetailTransactionController::class, 'store'])->name('store');

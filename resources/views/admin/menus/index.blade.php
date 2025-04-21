@@ -15,6 +15,7 @@
                 <th>Description</th>
                 <th>Price</th>
                 <th>Category Name</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -31,6 +32,20 @@
                     <td>{{ $m->description }}</td>
                     <td>{{ $m->price }}</td>
                     <td>{{ $m->category->name }}</td>
+                    <td>
+                        <a href="{{ route('menus.edit', $m->id) }}">
+                            edit
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ route('menus.destroy', $m->id) }}" onclick="event.preventDefault(); document.getElementById('delete-form-{{ $m->id }}').submit();">
+                            delete
+                        </a>
+                        <form id="delete-form-{{ $m->id }}" action="{{ route('menus.destroy', $m->id) }}" method="POST" style="display: none;">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
