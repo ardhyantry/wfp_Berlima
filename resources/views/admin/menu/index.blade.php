@@ -1,6 +1,6 @@
-@extends('layouts.SB')
+@extends('layouts.adminSB')
 
-@section('title', 'Food List')
+@section('title', 'Menu List')
 
 @section('content')
 <div class="container">
