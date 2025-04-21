@@ -12,13 +12,13 @@ class OrderStatusSeeder extends Seeder
         DB::table('order_status')->insert([
             [
                 'transactions_id' => 1,
-                'status_type' => 'ready',
+                'status' => 'ready',
                 'created_at' => now()->subDays(2),
                 'updated_at' => now()->subDays(2)->addHours(1)
             ],
             [
                 'transactions_id' => 2,
-                'status_type' => 'processing',
+                'status' => 'processing',
                 'created_at' => now()->subDay(),
                 'updated_at' => now()->subDay()
             ]
