@@ -19,8 +19,6 @@ class CustomerController extends Controller
             return $customer->role == 'customer';
         });
         return view('admin.customers.index', compact('customers'));
-
-
     }
 
     /**
@@ -28,7 +26,8 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        //return view
+        return view('admin.customers.create');
     }
 
     /**
@@ -36,7 +35,26 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validate request
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'phone' => 'required|string|max:15',
+            'address' => 'required|string|max:255',
+        ]);
+
+        //create user
+        User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
+            'phone' => $validated['phone'],
+            'address' => $validated['address'],
+            'role' => 'customer',
+        ]);
+
+        return redirect()->route('admin.customers.index')->with('success', 'Customer created successfully.');
     }
 
     /**

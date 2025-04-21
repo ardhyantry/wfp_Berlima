@@ -438,14 +438,17 @@
           <div class="detail-box">
             <div class="heading_container">
               <h2>
-                We Are Feane
+                We Are Quick Bite
               </h2>
             </div>
             <p>
-              There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
-              in some form, by injected humour, or randomised words which don't look even slightly believable. If you
-              are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in
-              the middle of text. All
+              Quick Bite adalah restoran healthy fast food yang hadir untuk memenuhi kebutuhan masyarakat modern akan
+              makanan cepat saji yang sehat, lezat, dan praktis. Kami menyajikan berbagai pilihan menu seperti salad
+              segar, wraps rendah kalori, smoothies bernutrisi, dan rice bowl seimbang yang dibuat dari bahan-bahan
+              alami tanpa pengawet. Dengan konsep quick, tasty, and good for you, Quick Bite berkomitmen menjadi solusi
+              mudah bagi siapa saja yang ingin menjalani gaya hidup sehat tanpa harus mengorbankan rasa dan waktu.
+
+              Stay healthy, stay quick with Quick Bite!
             </p>
           </div>
         </div>
@@ -546,7 +549,7 @@
         <div class="col-md-4 footer-col">
           <div class="footer_detail">
             <a href="" class="footer-logo">
-              Feane
+              Quick Bite
             </a>
             <p>
               Necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin

@@ -35,20 +35,20 @@ class TransactionController extends Controller
 
         Transaction::create($validated);
 
-        return redirect()->route('web.transactions.index')->with('success', 'Transaction created successfully.');
+        return redirect()->route('admin.transactions.index')->with('success', 'Transaction created successfully.');
     }
 
     public function show($id)
     {
         $transaction = Transaction::with(['user', 'details.menu'])->findOrFail($id);
-        return view('transactions.show', compact('transaction'));
+        return view('admin.transactions.show', compact('transaction'));
     }
 
     public function edit($id)
     {
         $transaction = Transaction::findOrFail($id);
         $users = User::all();
-        return view('transactions.edit', compact('transaction', 'users'));
+        return view('admin.transactions.edit', compact('transaction', 'users'));
     }
 
     public function update(Request $request, $id)
@@ -67,7 +67,7 @@ class TransactionController extends Controller
 
         $transaction->update($validated);
 
-        return redirect()->route('web.transactions.index')->with('success', 'Transaction updated successfully.');
+        return redirect()->route('admin.transactions.index')->with('success', 'Transaction updated successfully.');
     }
 
     public function destroy($id)
@@ -75,6 +75,6 @@ class TransactionController extends Controller
         $transaction = Transaction::findOrFail($id);
         $transaction->delete();
 
-        return redirect()->route('web.transactions.index')->with('success', 'Transaction deleted.');
+        return redirect()->route('admin.transactions.index')->with('success', 'Transaction deleted.');
     }
 }

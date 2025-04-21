@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use Illuminate\Http\Request;
+use App\Models\Category;
 
 class MenuController extends Controller
 {
@@ -49,7 +50,9 @@ class MenuController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $menu = Menu::findOrFail($id);
+        $categories = Category::all(); // untuk select kategori
+        return view('admin.menus.edit', compact('menu', 'categories'));
     }
 
     /**
@@ -57,7 +60,26 @@ class MenuController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $menu = Menu::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required|numeric',
+            'stock' => 'required|integer',
+            'categories_id' => 'required',
+        ]);
+
+        $data = $request->only('name', 'description', 'nutrition_fact', 'price', 'stock', 'categories_id');
+
+        // Update gambar jika ada
+        if ($request->hasFile('image_path')) {
+            $data['image_path'] = $request->file('image_path')->store('menus', 'public');
+        }
+
+        $menu->update($data);
+
+        return redirect()->route('menus.index')->with('successUp', 'Menu berhasil diperbarui.');
     }
 
     /**
@@ -65,6 +87,14 @@ class MenuController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $menu = Menu::findOrFail($id);
+
+        // Jika relasi pivot -> detach ingredient-nya dulu
+        $menu->ingredients()->detach();
+
+        // Lalu hapus menu-nya
+        $menu->delete();
+
+        return redirect()->route('menus.index')->with('successDel', 'Menu berhasil dihapus.');
     }
 }
