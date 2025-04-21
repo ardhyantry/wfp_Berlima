@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Menu;
 use Illuminate\Http\Request;
 
-class MenuController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //eloquent
-        $listMenu = Menu::all();
-
-        return view('admin.menus.index', compact('listMenu'));
+        //
     }
 
     /**
@@ -37,11 +33,9 @@ class MenuController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($menu)
+    public function show(string $id)
     {
-        //eloquent
-        $menu = Menu::find($menu);
-        return view('admin.menus.show', compact('menu'));
+        //
     }
 
     /**

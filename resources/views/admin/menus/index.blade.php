@@ -21,8 +21,8 @@
             @foreach ($listMenu as $m)
                 <tr>
                     <td>
-                        <a href="{{ route('menu.show', $m->id) }}">
-                            {{ $m->id }}
+                        <a href="{{ route('menus.show', $m->id) }}">
+                            view details
                         </a>
                     </td>
                     <td>{{ $m->id }}</td>
@@ -30,7 +30,7 @@
                     <td>{{ $m->nutrition_facts }}</td>
                     <td>{{ $m->description }}</td>
                     <td>{{ $m->price }}</td>
-                    <td>{{ $m->category_name }}</td>
+                    <td>{{ $m->category->name }}</td>
                 </tr>
             @endforeach
         </tbody>

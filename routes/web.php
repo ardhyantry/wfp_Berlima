@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::resource('customers',CustomerController::class);
+Route::resource('customers',CustomerController::class);
 Route::resource('categories',CategoryController::class);
-Route::resource('menu', MenuController::class);
-// Route::resource('orders',OrderItemController::class);
+Route::resource('menus', MenuController::class);
+Route::resource('orders',OrderController::class);

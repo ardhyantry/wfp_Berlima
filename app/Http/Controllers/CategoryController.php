@@ -14,7 +14,7 @@ class CategoryController extends Controller
     {
         //eloquent
         $listCategory = Category::all();
-        return view('admin.category.index', compact('listCategory'));
+        return view('admin.categories.index', compact('listCategory'));
     }
 
     /**
