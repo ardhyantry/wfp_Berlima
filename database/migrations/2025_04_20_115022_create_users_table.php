@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('phone_number', 25);
             $table->string('username', 45)->unique();
             $table->string('password');
+            $table->enum('role', ['admin', 'customer'])->default('customer');
             $table->timestamps();
         });
     }

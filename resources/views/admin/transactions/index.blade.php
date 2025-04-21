@@ -14,6 +14,7 @@
                 <th>Total</th>
                 <th>Order Type</th>
                 <th>Payment Type</th>
+                <th>Order Status</th>
                 <th>User ID</th>
                 <th>Created At</th>
                 <th>Updated At</th>
@@ -28,6 +29,7 @@
                 <td>{{ number_format($tx->total) }}</td>
                 <td>{{ ucfirst($tx->order_type) }}</td>
                 <td>{{ strtoupper($tx->payment_type) }}</td>
+                <td>{{ $tx->status }}</td>
                 <td>{{ $tx->users_id }}</td>
                 <td>{{ $tx->created_at }}</td>
                 <td>{{ $tx->updated_at }}</td>

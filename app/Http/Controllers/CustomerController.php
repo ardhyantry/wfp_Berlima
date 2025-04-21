@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class CustomerController extends Controller
 {
@@ -11,7 +12,15 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        //eloquent
+        $customers = User::all();
+        //filter role 
+        $customers = $customers->filter(function ($customer) {
+            return $customer->role == 'customer';
+        });
+        return view('admin.customers.index', compact('customers'));
+
+
     }
 
     /**

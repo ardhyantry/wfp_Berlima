@@ -23,7 +23,8 @@ class UserSeeder extends Seeder
                 'username' => 'admin',
                 'password' => Hash::make('1'),
                 'created_at' => now(),
-                'updated_at' => now()
+                'updated_at' => now(),
+                'role' => 'admin',  
             ],
             [
                 'name' => 'Customer',
@@ -32,7 +33,8 @@ class UserSeeder extends Seeder
                 'username' => 'customer',
                 'password' => Hash::make('1'),
                 'created_at' => now(),
-                'updated_at' => now()
+                'updated_at' => now(),
+                'role' => 'customer'  ,
             ]
         ]);
     }
