@@ -4,10 +4,11 @@
 
 @section('content')
 <div class="container">
-    <h1>Food List</h1>
+    <h1>Menu List</h1>
     <table class="table">
         <thead>
             <tr>
+                <th>Action</th>
                 <th>Id</th>
                 <th>Name</th>
                 <th>Nutrition Facts</th>
@@ -17,20 +18,25 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($foods as $food)
+            @foreach ($listMenu as $m)
                 <tr>
-                    <td>{{ $food->id }}</td>
-                    <td>{{ $food->name }}</td>
-                    <td>{{ $food->nutrition_facts }}</td>
-                    <td>{{ $food->description }}</td>
-                    <td>{{ $food->price }}</td>
-                    <td>{{ $food->category_name }}</td>
+                    <td>
+                        <a href="{{ route('menu.show', $m->id) }}">
+                            {{ $m->id }}
+                        </a>
+                    </td>
+                    <td>{{ $m->id }}</td>
+                    <td>{{ $m->name }}</td>
+                    <td>{{ $m->nutrition_facts }}</td>
+                    <td>{{ $m->description }}</td>
+                    <td>{{ $m->price }}</td>
+                    <td>{{ $m->category_name }}</td>
                 </tr>
             @endforeach
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="6" class="text-center">Total Foods: {{ $foods->count() }}</td>
+                <td colspan="6" class="text-center">Total Foods: {{ $listMenu->count() }}</td>
             </tr>
     </table>
 </div>

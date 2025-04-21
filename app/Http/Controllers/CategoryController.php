@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Menu;
 use Illuminate\Http\Request;
+use App\Models\Category;
 
-class MenuController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,9 +13,8 @@ class MenuController extends Controller
     public function index()
     {
         //eloquent
-        $listMenu = Menu::all();
-
-        return view('admin.menu.index', compact('listMenu'));
+        $listCategory = Category::all();
+        return view('admin.category.index', compact('listCategory'));
     }
 
     /**
@@ -37,11 +36,9 @@ class MenuController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($menu)
+    public function show(string $id)
     {
-        //eloquent
-        $menu = Menu::find($menu);
-        return view('admin.menu.show', compact('menu'));
+        //
     }
 
     /**
