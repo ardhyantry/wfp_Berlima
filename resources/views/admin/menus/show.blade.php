@@ -1,36 +1,78 @@
 @extends('layouts.adminSB')
 
-
-@section('title', 'Menu Show')
+@section('title', 'Menu Details')
 
 @section('content')
-    {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        show image
-    </button> --}}
-    <a class="btn btn-primary" href="{{url()->previous()}}"> Go Back </a>
-    <div class="container">
-        <h1>{{ $menu->name }}</h1>
-        <h2>{{ $menu->nutrition_fact }}</h2>
-        <h3>{{ $menu->category->name }}</h3>
-        <h4>{{ $menu->description }}</h4>
-        <h5>{{ $menu->price }}</h5>
-    </div>
+<div class="container mt-4">
+    <a class="btn btn-secondary mb-3" href="{{ url()->previous() }}">
+        ← Go Back
+    </a>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+    <div class="card shadow">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">{{ $menu->name }}</h4>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-sm btn-primary show-image-btn" 
+                    data-id="{{ $menu->id }}" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#imageModal">
+                Show Image
+            </button>
+        </div>
+        <div class="card-body">
+            <p><strong>Nutrition Facts:</strong> {{ $menu->nutrition_fact }}</p>
+            <p><strong>Category:</strong> {{ $menu->category->name }}</p>
+            <p><strong>Description:</strong> {{ $menu->description }}</p>
+            <p><strong>Price:</strong> Rp{{ number_format($menu->price, 0, ',', '.') }}</p>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Image -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Menu Image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <!-- Image will be loaded here -->
+                <p class="text-muted">Loading image...</p>
             </div>
         </div>
     </div>
+</div>
 @endsection
+
+@push('scripts')
+<!-- jQuery CDN if not already included -->
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+<script>
+    $(document).ready(function () {
+        $('.show-image-btn').on('click', function () {
+            var menuId = $(this).data('id');
+            var modalBody = $('#imageModal .modal-body');
+            modalBody.html('<p class="text-muted">Loading image...</p>');
+            $.ajax({
+                url: '/menus/' + menuId + '/image',
+                method: 'GET',
+                success: function (data) {
+                    if (data.image_path) {
+                        modalBody.html(`
+                            <img src="/image/${data.image_path}" 
+                                 class="img-fluid rounded shadow" 
+                                 alt="Menu Image">
+                        `);
+                    } else {
+                        modalBody.html('<p class="text-muted">No image available.</p>');
+                    }
+                },
+                error: function () {
+                    modalBody.html('<p class="text-danger">Failed to load image.</p>');
+                }
+            });
+        });
+    });
+</script>
+@endpush

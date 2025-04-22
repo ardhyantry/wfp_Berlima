@@ -96,4 +96,15 @@ class MenuController extends Controller
 
         return redirect()->route('menus.index')->with('success', 'Menu berhasil dihapus!');
     }
+
+    public function getImage($id)
+    {
+        $menu = Menu::find($id);
+        if (!$menu) {
+            return response()->json(['error' => 'Menu not found'], 404);
+        }
+        return response()->json([
+            'image_path' => $menu->image_path
+        ]);
+    }
 }
