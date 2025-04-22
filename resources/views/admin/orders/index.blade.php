@@ -34,7 +34,8 @@
                         <td>{{ number_format($order->total, 0, ',', '.') }}</td>
                         <td>{{ $order->notes }}</td>
                         <td>
-                            <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                            <a href="{{ route('orders.show', $order->id) }}" class="btn btn-info">View</a>
+                            <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-warning">Edit</a>
                             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $order->id }}">
                                 Delete
                             </button>
