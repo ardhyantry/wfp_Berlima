@@ -19,9 +19,9 @@ class Transaction extends Model
         'users_id'
     ];
 
-    public function details()
+    public function orders()
     {
-        return $this->hasMany(DetailTransaction::class, 'transactions_id');
+        return $this->hasMany(Order::class, 'transactions_id');
     }
 
     public function user()

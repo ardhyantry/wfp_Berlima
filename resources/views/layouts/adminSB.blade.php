@@ -69,6 +69,10 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Transactions List
                         </a>
+                        <a class="nav-link" href="{{ route('orders.index') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Order List
+                        </a>
                     </div>
                 </div>
             </nav>
@@ -91,6 +95,8 @@
             </footer>
         </div>
     </div>
+    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
     <script src="{{ asset('adminSB/js/scripts.js') }}"></script>
@@ -105,6 +111,8 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    @stack('scripts')
 </body>
 
 </html>

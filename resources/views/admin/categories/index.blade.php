@@ -31,18 +31,41 @@
                     </td>
                     {{-- delete --}}
                     <td class="px-4 py-2 border text-center">
-                        <form action="{{ route('categories.destroy', $category->id) }}" method="POST"
-                            onsubmit="return confirm('Are you sure you want to delete this category?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
-                        </form>
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $category->id }}">
+                            Delete
+                        </button>
                 </tr>
+
+                {{-- modals --}}
+                <div class="modal fade" id="deleteModal{{ $category->id }}" tabindex="-1"
+                    aria-labelledby="deleteModalLabel{{ $category->id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-danger text-white">
+                                <h5 class="modal-title" id="deleteModalLabel{{ $category->id }}">Konfirmasi Hapus</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                            </div>
+                            <div class="modal-body">
+                                Apakah kamu yakin ingin menghapus Category <strong>{{ $category->name }}</strong>?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+
+                                <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Hapus</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             @endforeach
         </tbody>
     </table>
 
     <a href="{{ route('categories.create') }}" class="btn btn-primary mt-4">Add New Category</a>
+
 
 
 @endsection

@@ -27,6 +27,7 @@ Route::get('/', function () {
 Route::resource('admin/customers',CustomerController::class);
 Route::resource('admin/categories',CategoryController::class);
 Route::resource('admin/menus', MenuController::class);
+Route::resource('admin/orders', OrderController::class);
 
 // Route::resource('admin/users', UserController::class);
 Route::prefix('admin')->name('admin.')->group(function () {

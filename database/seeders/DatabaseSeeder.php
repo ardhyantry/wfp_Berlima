@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             MenuSeeder::class,
             MenuIngredientSeeder::class,
             TransactionSeeder::class,
-            DetailTransactionSeeder::class,
+            // DetailTransactionSeeder::class,
+            OrdersTableSeeder::class,
         ]);
     }
 }
