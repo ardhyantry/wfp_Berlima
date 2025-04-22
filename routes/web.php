@@ -6,8 +6,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\DetailTransactionController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +27,11 @@ Route::resource('admin/customers',CustomerController::class);
 Route::resource('admin/categories',CategoryController::class);
 Route::resource('admin/menus', MenuController::class);
 Route::resource('admin/orders', OrderController::class);
+
 Route::get('/menus/{id}/image', [MenuController::class, 'getImage']);
+
+Route::get('admin/', [ReportController::class,'index'])->name('admin.index');
+
 
 // Route::resource('admin/users', UserController::class);
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -43,15 +46,4 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/{id}', [TransactionController::class, 'destroy'])->name('destroy');
     });
 
-    Route::prefix('detail-transactions')->name('detail-transactions.')->group(function () {
-        Route::get('/', [DetailTransactionController::class, 'index'])->name('index');
-        Route::get('/create', [DetailTransactionController::class, 'create'])->name('create');
-        Route::post('/', [DetailTransactionController::class, 'store'])->name('store');
-        Route::get('/{id}', [DetailTransactionController::class, 'show'])->name('show');
-        Route::get('/{id}/edit', [DetailTransactionController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [DetailTransactionController::class, 'update'])->name('update');
-        Route::delete('/{id}', [DetailTransactionController::class, 'destroy'])->name('destroy');
-    });
-
 });
-
