@@ -31,7 +31,7 @@
                     <tr>
                         <td>{{ $m->id }}</td>
                         <td>{{ $m->name }}</td>
-                        <td>{{ $m->nutrition_facts }}</td>
+                        <td>{{ $m->nutrition_fact }}</td>
                         <td>{{ $m->description }}</td>
                         <td>{{ number_format($m->price, 0, ',', '.') }}</td>
                         <td>{{ $m->category->name }}</td>
