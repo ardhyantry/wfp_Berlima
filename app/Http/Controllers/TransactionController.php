@@ -29,7 +29,7 @@ class TransactionController extends Controller
             'total' => 'required|numeric',
             'order_type' => 'required|in:dine_in,take_away',
             'payment_type' => 'required|in:QRIS,credit_card,debit_card,e_wallet',
-            'status' => 'required|in:pending,paid,cancelled',
+            'status' => 'required|in:pending,processing,cancelled,ready',
             'users_id' => 'required|exists:users,id',
         ]);
 
@@ -61,7 +61,7 @@ class TransactionController extends Controller
             'total' => 'required|numeric',
             'order_type' => 'required|in:dine_in,take_away',
             'payment_type' => 'required|in:QRIS,credit_card,debit_card,e_wallet',
-            'status' => 'required|in:pending,paid,cancelled',
+            'status' => 'required|in:pending,processing,cancelled,ready',
             'users_id' => 'required|exists:users,id',
         ]);
 

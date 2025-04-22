@@ -20,7 +20,7 @@ use App\Http\Controllers\ReportController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/admin');
 });
 
 Route::resource('admin/customers',CustomerController::class);

@@ -54,7 +54,7 @@
             <select name="status" class="form-control">
                 <option value="pending">Pending</option>
                 <option value="processing">Processing</option>
-                <option value="completed">Completed</option>
+                <option value="ready">Ready</option>
                 <option value="cancelled">Cancelled</option>
             </select>
         </div>

@@ -55,7 +55,7 @@
             <select name="status" class="form-control">
                 <option value="pending" {{ $transaction->status == 'pending' ? 'selected' : '' }}>Pending</option>
                 <option value="processing" {{ $transaction->status == 'processing' ? 'selected' : '' }}>Processing</option>
-                <option value="completed" {{ $transaction->status == 'completed' ? 'selected' : '' }}>Completed</option>
+                <option value="ready" {{ $transaction->status == 'ready' ? 'selected' : '' }}>Ready</option>
                 <option value="cancelled" {{ $transaction->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
             </select>
         </div>

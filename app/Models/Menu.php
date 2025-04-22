@@ -29,8 +29,8 @@ class Menu extends Model
         return $this->belongsToMany(Ingredient::class, 'menus_has_ingredients', 'menus_id', 'ingredients_id');
     }
 
-    public function detailTransactions()
+    public function order()
     {
-        return $this->hasMany(DetailTransaction::class, 'menus_id');
+        return $this->hasMany(Order::class, 'menus_id');
     }
 }
