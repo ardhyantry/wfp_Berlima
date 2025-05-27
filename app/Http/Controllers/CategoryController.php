@@ -32,8 +32,8 @@ class CategoryController extends Controller
 
     public function show(string $id)
     {
-        $category = Category::findOrFail($id);
-        return view('admin.categories.show', compact('category'));
+        // $category = Category::findOrFail($id);
+        // return view('admin.categories.show', compact('category'));
     }
 
     public function edit(string $id)
@@ -61,5 +61,15 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()->route('categories.index')->with('success', 'Kategori berhasil dihapus!');
+    }
+    public function getEditForm(Request $request)
+    {
+        // return response()->json(['msg' => 'It works!']);
+        $category = Category::find($request->id);
+        if (!$category) {
+            return response()->json(['msg' => 'Category not found.'], 404);
+        }
+        $view = view('admin.categories.edit', compact('category'))->render();
+        return response()->json(['msg' => $view]);
     }
 }

@@ -80,6 +80,7 @@
         <div id="layoutSidenav_content">
             <main>
                 @yield('content')
+                @stack('modals')
             </main>
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
@@ -113,6 +114,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     
     @stack('scripts')
+    
 </body>
 
 </html>

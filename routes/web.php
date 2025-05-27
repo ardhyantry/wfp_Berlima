@@ -47,3 +47,4 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
 });
+Route::post('/ajax/category/getEditForm',[CategoryController::class,'getEditForm'])->name('categories.getEditForm');
