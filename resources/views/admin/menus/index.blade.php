@@ -37,7 +37,10 @@
                         <td>{{ $m->category->name }}</td>
                         <td>
                             <a href="{{ route('menus.show', $m->id) }}" class="btn btn-info btn-sm">View</a>
-                            <a href="{{ route('menus.edit', $m->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="#modalEdit" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                onclick="getEditForm({{ $m->id }})">
+                                Edit
+                            </a>
                             <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $m->id }}">
                                 Delete
                             </button>
@@ -76,4 +79,38 @@
             </tfoot>
         </table>
     </div>
+    @push('modals')
+        <div class="modal fade" id="modalEdit" tabindex="-1" role="basic" aria-hidden="true">
+            <div class="modal-dialog modal-wide">
+                <div class="modal-content">
+                    <div class="modal-body" id="modalContent">
+                        {{-- You can put animated loading image here... --}}
+                        <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
+                            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endpush
+    @push('scripts')
+        <script>
+            function getEditForm(id) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{route("menus.getEditForm")}}',
+                    data: {
+                        '_token': '<?php echo csrf_token() ?>',
+                        'id': id
+                    },
+                    success: function (data) {
+                        $('#modalContent').html(data.msg)
+                    }
+                });
+            }
+        </script>
+    @endpush
 @endsection

@@ -107,4 +107,15 @@ class MenuController extends Controller
             'image_path' => $menu->image_path
         ]);
     }
+    public function getEditForm(Request $request)
+    {
+        $menu = Menu::findOrFail($request->id);
+        $categories = Category::all();
+        if (!$menu) {
+            return response()->json(['error' => 'Menu not found'], 404);
+        }
+        return response()->json([
+            'msg' => view('admin.menus.getEditForm', compact('menu', 'categories'))->render()
+        ]);
+    }
 }
