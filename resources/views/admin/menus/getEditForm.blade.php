@@ -32,8 +32,8 @@
     </div>
     <!-- Gambar -->
     <div class="mb-3">
-        <label for="image_path" class="form-label">Gambar</label>
-        <input type="file" name="image_path" class="form-control">
+        <label for="image_path" class="form-label">Gambar (URL)</label>
+        <input type="text" name="image_path" class="form-control" value="{{ old('image_path', $menu->image_path) }}">
         <br>
         @if($menu->image_path)
             <img src="{{ asset('storage/' . $menu->image_path) }}" alt="Current Image" width="150">

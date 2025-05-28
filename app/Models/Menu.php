@@ -26,11 +26,14 @@ class Menu extends Model
 
     public function ingredients()
     {
-        return $this->belongsToMany(Ingredient::class, 'menus_has_ingredients', 'menus_id', 'ingredients_id');
+        return $this->belongsToMany(Ingredient::class, 
+        'menus_has_ingredients', 'menus_id',
+         'ingredients_id');
     }
 
-    public function order()
+    public function orders()
     {
-        return $this->hasMany(Order::class, 'menus_id');
+        return $this->belongsToMany(Order::class,'orders',
+        'menus_id', 'transactions_id');
     }
 }

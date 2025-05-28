@@ -23,12 +23,12 @@ class Order extends Model
     // Relasi ke Transaction
     public function transaction()
     {
-        return $this->belongsTo(Transaction::class, 'transactions_id');
+        return $this->belongsToMany(Transaction::class, 'transactions_id');
     }
 
     // Relasi ke Menu
-    public function menu()
+    public function menus()
     {
-        return $this->belongsTo(Menu::class, 'menus_id');
+        return $this->belongsToMany(Menu::class, 'orders', 'menus_id', 'transactions_id');
     }
 }

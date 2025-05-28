@@ -24,6 +24,7 @@
             <p><strong>Category:</strong> {{ $menu->category->name }}</p>
             <p><strong>Description:</strong> {{ $menu->description }}</p>
             <p><strong>Price:</strong> Rp{{ number_format($menu->price, 0, ',', '.') }}</p>
+            <p><strong>Stock:</strong> {{ $menu->stock }}</p>
         </div>
     </div>
 </div>

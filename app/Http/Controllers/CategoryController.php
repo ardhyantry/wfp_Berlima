@@ -69,7 +69,7 @@ class CategoryController extends Controller
         if (!$category) {
             return response()->json(['msg' => 'Category not found.'], 404);
         }
-        $view = view('admin.categories.edit', compact('category'))->render();
+        $view = view('admin.categories.getEditForm', compact('category'))->render();
         return response()->json(['msg' => $view]);
     }
 }
