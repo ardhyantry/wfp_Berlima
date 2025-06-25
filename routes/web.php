@@ -7,35 +7,52 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UserController; // untuk login/register custom
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
 */
-
 Route::get('/', function () {
-    return redirect('/admin');
-});
+    return view('public.menus.index'); // file: resources/views/public/index.blade.php
+})->name('public.home');
 
-Route::resource('admin/customers',CustomerController::class);
-Route::resource('admin/categories',CategoryController::class);
-Route::resource('admin/menus', MenuController::class);
-Route::resource('admin/orders', OrderController::class);
+// Redirect root ke halaman admin/dashboard
+// Route::get('/', function () {
+//     return redirect('/admin');
+// });
 
-Route::get('/menus/{id}/image', [MenuController::class, 'getImage']);
+// --------------------
+// AUTH ROUTES CUSTOM
+// --------------------
+Route::get('/login', [UserController::class, 'loginForm'])->name('login');
+Route::post('/login', [UserController::class, 'login'])->name('login.submit');
 
-Route::get('admin/', [ReportController::class,'index'])->name('admin.index');
+Route::get('/register', [UserController::class, 'registerForm'])->name('register');
+Route::post('/register', [UserController::class, 'register'])->name('register.submit');
 
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
-// Route::resource('admin/users', UserController::class);
-Route::prefix('admin')->name('admin.')->group(function () {
+// --------------------
+// ADMIN-PROTECTED ROUTES
+// --------------------
+Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     
+    // Dashboard utama
+    Route::get('/', [ReportController::class, 'index'])->name('index');
+
+    // Resource routes
+    Route::resource('customers', CustomerController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('menus', MenuController::class);
+    Route::resource('orders', OrderController::class);
+
+    // Ajax form edit (modal)
+    Route::post('/ajax/category/getEditForm', [CategoryController::class, 'getEditForm'])->name('categories.getEditForm');
+    Route::post('/ajax/menu/getEditForm', [MenuController::class, 'getEditForm'])->name('menus.getEditForm');
+
+    // Transactions
     Route::prefix('transactions')->name('transactions.')->group(function () {
         Route::get('/', [TransactionController::class, 'index'])->name('index');
         Route::get('/create', [TransactionController::class, 'create'])->name('create');
@@ -46,6 +63,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('/{id}', [TransactionController::class, 'destroy'])->name('destroy');
     });
 
+    // Image Menu
+    Route::get('/menus/{id}/image', [MenuController::class, 'getImage']);
+
 });
-Route::post('/ajax/category/getEditForm',[CategoryController::class,'getEditForm'])->name('categories.getEditForm');
-Route::post('/ajax/menu/getEditForm',[MenuController::class,'getEditForm'])->name('menus.getEditForm');
+Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+
+});

@@ -53,15 +53,15 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Core</div>
-                        <a class="nav-link" href="{{ route('menus.index') }}">
+                        <a class="nav-link" href="{{ route('admin.menus.index') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Menu List
                         </a>
-                        <a class="nav-link" href="{{ route('categories.index') }}">
+                        <a class="nav-link" href="{{ route('admin.categories.index') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Category List
                         </a>
-                        <a class="nav-link" href="{{ route('customers.index') }}">
+                        <a class="nav-link" href="{{ route('admin.customers.index') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Customer List
                         </a>
@@ -69,7 +69,7 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Transactions List
                         </a>
-                        <a class="nav-link" href="{{ route('orders.index') }}">
+                        <a class="nav-link" href="{{ route('admin.orders.index') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Order List
                         </a>
