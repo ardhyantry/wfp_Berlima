@@ -23,8 +23,18 @@ class MenuController extends Controller
     }
     public function indexPublic()
     {
-        $listMenu = Menu::with('category')->limit(10)->get();
-        return view('public.home', compact('listMenu'));
+        $categories = Category::all();
+        $listMenu = [];
+
+        foreach ($categories as $category) {
+            $listMenu[$category->name] = Menu::where('categories_id', $category->id)
+            ->with('category')
+            ->limit(5)
+            ->orderBy('name', 'asc')
+            ->get();
+        }
+
+        return view('public.home', compact('listMenu', 'categories'));
     }
 
     /**
