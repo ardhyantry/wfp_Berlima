@@ -18,6 +18,9 @@ Route::get('/', function () {
     return redirect()->route('login');
 })->name('home');
 
+Route::get('/menus', [App\Http\Controllers\MenuController::class, 'index'])->name('public.menus.index');
+Route::get('/home', [App\Http\Controllers\MenuController::class, 'indexPublic'])->name('public.home');
+
 // Redirect root ke halaman admin/dashboard
 // Route::get('/', function () {
 //     return redirect('/admin');

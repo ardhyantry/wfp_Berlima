@@ -21,6 +21,11 @@ class MenuController extends Controller
             return view('public.menus.index', compact('listMenu'));
         }
     }
+    public function indexPublic()
+    {
+        $listMenu = Menu::with('category')->limit(5)->get();
+        return view('public.home', compact('listMenu'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -48,7 +53,7 @@ class MenuController extends Controller
 
         Menu::create($validated);
 
-        return redirect()->route('menus.index')->with('success', 'Menu berhasil ditambahkan!');
+        return redirect()->route('admin.menus.index')->with('success', 'Menu berhasil ditambahkan!');
     }
 
     /**
@@ -88,7 +93,7 @@ class MenuController extends Controller
         $menu = Menu::findOrFail($id);
         $menu->update($validated);
 
-        return redirect()->route('menus.index')->with('success', 'Menu berhasil diupdate!');
+        return redirect()->route('admin.menus.index')->with('success', 'Menu berhasil diupdate!');
     }
 
     /**
@@ -99,7 +104,7 @@ class MenuController extends Controller
         $menu = Menu::findOrFail($id);
         $menu->delete();
 
-        return redirect()->route('menus.index')->with('success', 'Menu berhasil dihapus!');
+        return redirect()->route('admin.menus.index')->with('success', 'Menu berhasil dihapus!');
     }
 
     public function getImage($id)
@@ -122,5 +127,15 @@ class MenuController extends Controller
         return response()->json([
             'msg' => view('admin.menus.getEditForm', compact('menu', 'categories'))->render()
         ]);
+    }
+    public function search(Request $request)
+    {
+        $query = $request->input('q');
+
+        $listMenu = Menu::where('name', 'like', "%$query%")
+            ->orWhere('description', 'like', "%$query%")
+            ->get();
+
+        return view('public.menus.index', compact('listMenu'));
     }
 }
