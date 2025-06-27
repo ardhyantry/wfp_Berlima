@@ -19,10 +19,9 @@ class Transaction extends Model
         'users_id'
     ];
 
-    public function orders()
+   public function orders()
     {
-        return $this->belongsToMany(Order::class,
-         'orders', 'transactions_id', 'menus_id');
+        return $this->hasMany(Order::class, 'transactions_id');
     }
 
     public function user()

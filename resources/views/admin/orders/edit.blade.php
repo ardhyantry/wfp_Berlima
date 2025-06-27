@@ -11,7 +11,7 @@
         </div>
     @endif
 
-    <form action="{{ route('orders.update', $order->id) }}" method="POST">
+    <form action="{{ route('admin.order.update', $order->id) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -54,7 +54,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{{ route('orders.index') }}" class="btn btn-secondary">Kembali</a>
+        <a href="{{ route('admin.order.index') }}" class="btn btn-secondary">Kembali</a>
     </form>
 </div>
 @endsection

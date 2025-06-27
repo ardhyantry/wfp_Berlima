@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
-
-    protected $table = 'orders';
+    
 
     protected $fillable = [
         'transactions_id',
@@ -20,15 +19,14 @@ class Order extends Model
         'notes',
     ];
 
-    // Relasi ke Transaction
     public function transaction()
     {
-        return $this->belongsToMany(Transaction::class, 'transactions_id');
+        return $this->belongsTo(Transaction::class, 'transactions_id');
     }
 
-    // Relasi ke Menu
-    public function menus()
+    public function menu()
     {
-        return $this->belongsToMany(Menu::class, 'orders', 'menus_id', 'transactions_id');
+        return $this->belongsTo(Menu::class, 'menus_id');
     }
 }
+

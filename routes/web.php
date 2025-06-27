@@ -46,7 +46,16 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('customers', CustomerController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('menus', MenuController::class);
-    Route::resource('orders', OrderController::class);
+     Route::resource('orders', OrderController::class)
+        ->names([
+            'index'   => 'order.index',    
+            'create'  => 'order.create',   
+            'store'   => 'order.store',    
+            'show'    => 'order.show',     
+            'edit'    => 'order.edit',     
+            'update'  => 'order.update',   
+            'destroy' => 'order.destroy',  
+        ]);
 
     // Ajax form edit (modal)
     Route::post('/ajax/category/getEditForm', [CategoryController::class, 'getEditForm'])->name('categories.getEditForm');
@@ -67,6 +76,4 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/menus/{id}/image', [MenuController::class, 'getImage']);
 
 });
-Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
-});

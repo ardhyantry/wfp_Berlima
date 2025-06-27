@@ -4,7 +4,7 @@
 @section('content')
     <div class="container">
         <h2>Daftar Order</h2>
-        <a href="{{ route('orders.create') }}" class="btn btn-success mb-3">Tambah Order</a>
+        <a href="{{ route('admin.order.create') }}" class="btn btn-success mb-3">Tambah Order</a>
 
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -34,8 +34,8 @@
                         <td>{{ number_format($order->total, 0, ',', '.') }}</td>
                         <td>{{ $order->notes }}</td>
                         <td>
-                            <a href="{{ route('orders.show', $order->id) }}" class="btn btn-info">View</a>
-                            <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-warning">Edit</a>
+                            <a href="{{ route('admin.order.show', $order->id) }}" class="btn btn-info">View</a>
+                            <a href="{{ route('admin.order.edit', $order->id) }}" class="btn btn-warning">Edit</a>
                             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $order->id }}">
                                 Delete
                             </button>
@@ -57,7 +57,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
 
-                                    <form action="{{ route('orders.destroy', $order->id) }}" method="POST">
+                                    <form action="{{ route('admin.order.destroy', $order->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">Hapus</button>

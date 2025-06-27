@@ -48,7 +48,7 @@ class OrderController extends Controller
 
         Order::create($validated);
 
-        return redirect()->route('orders.index')->with('success', 'Order berhasil ditambahkan!');
+        return redirect()->route('admin.orders.index')->with('success', 'Order berhasil ditambahkan!');
     }
 
     /**
@@ -90,7 +90,7 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
         $order->update($validated);
 
-        return redirect()->route('orders.index')->with('success', 'Order berhasil diperbarui!');
+        return redirect()->route('admin.orders.index')->with('success', 'Order berhasil diperbarui!');
     
     }
 
@@ -102,6 +102,6 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
         $order->delete();
 
-        return redirect()->route('orders.index')->with('success', 'Order deleted successfully.');
+        return redirect()->route('admin.orders.index')->with('success', 'Order deleted successfully.');
     }
 }
