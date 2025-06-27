@@ -6,7 +6,7 @@
     <div class="container">
         <h2>Daftar Customer</h2>
 
-        <a href="{{ route('customers.create') }}" class="btn btn-success mb-3">Tambah Customer</a>
+        <a href="{{ route('admin.customers.create') }}" class="btn btn-success mb-3">Tambah Customer</a>
 
         @if ($errors->any())
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -46,7 +46,7 @@
                         <td>{{ $user->username }}</td>
                         <td>{{ $user->created_at }}</td>
                         <td>
-                            <a href="{{ route('customers.edit', $user->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="{{ route('admin.customers.edit', $user->id) }}" class="btn btn-warning btn-sm">Edit</a>
                             <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $user->id }}">
                                 Delete
                             </button>
@@ -68,7 +68,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
 
-                                    <form action="{{ route('customers.destroy', $user->id) }}" method="POST">
+                                    <form action="{{ route('admin.customers.destroy', $user->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">Hapus</button>

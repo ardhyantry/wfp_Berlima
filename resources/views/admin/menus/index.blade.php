@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         <h2>Daftar Menu</h2>
-        <a href="{{ route('menus.create') }}" class="btn btn-success mb-3">Tambah Menu</a>
+        <a href="{{ route('admin.menus.create') }}" class="btn btn-success mb-3">Tambah Menu</a>
 
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -36,7 +36,7 @@
                         <td>{{ number_format($m->price, 0, ',', '.') }}</td>
                         <td>{{ $m->category->name }}</td>
                         <td>
-                            <a href="{{ route('menus.show', $m->id) }}" class="btn btn-info btn-sm">View</a>
+                            <a href="{{ route('admin.menus.show', $m->id) }}" class="btn btn-info btn-sm">View</a>
                             <a href="#modalEdit" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                 onclick="getEditForm({{ $m->id }})">
                                 Edit
@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                    <form action="{{ route('menus.destroy', $m->id) }}" method="POST">
+                                    <form action="{{ route('admin.menus.destroy', $m->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">Hapus</button>
@@ -101,7 +101,7 @@
             function getEditForm(id) {
                 $.ajax({
                     type: 'POST',
-                    url: '{{route("menus.getEditForm")}}',
+                    url: '{{route("admin.menus.getEditForm")}}',
                     data: {
                         '_token': '<?php echo csrf_token() ?>',
                         'id': id

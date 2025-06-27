@@ -61,4 +61,9 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+    public function isAdmin()
+    {
+        // Example: Check if the user's role is 'admin'
+        return $this->role === 'admin'; // Replace with your logic
+    }
 }

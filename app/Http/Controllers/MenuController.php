@@ -14,7 +14,12 @@ class MenuController extends Controller
     public function index()
     {
         $listMenu = Menu::with('category')->get();
-        return view('admin.menus.index', compact('listMenu'));
+
+        if (auth()->check() && auth()->user()->isAdmin()) {
+            return view('admin.menus.index', compact('listMenu'));
+        } else {
+            return view('public.menus.index', compact('listMenu'));
+        }
     }
 
     /**

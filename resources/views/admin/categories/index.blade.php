@@ -4,7 +4,7 @@
 @section('content')
     <div class="container">
         <h2>Daftar Kategori</h2>
-        <a href="{{ route('categories.create') }}" class="btn btn-success mb-3">Tambah Kategori</a>
+        <a href="{{ route('admin.categories.create') }}" class="btn btn-success mb-3">Tambah Kategori</a>
 
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -61,7 +61,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                        <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
+                                        <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">Hapus</button>
@@ -97,7 +97,7 @@
             function getEditForm(id) {
                 $.ajax({
                     type: 'POST',
-                    url: '{{route("categories.getEditForm")}}',
+                    url: '{{route("admin.categories.getEditForm")}}',
                     data: {
                         '_token': '<?php echo csrf_token() ?>',
                         'id': id

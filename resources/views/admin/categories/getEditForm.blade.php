@@ -1,5 +1,5 @@
 <h3>Edit Kategori</h3>
-<form action="{{ route('categories.update', $category->id) }}" method="POST">
+<form action="{{ route('admin.categories.update', $category->id) }}" method="POST">
     @csrf
     @method('PUT')
 
@@ -22,5 +22,5 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-    <a href="{{ route('categories.index') }}" class="btn btn-secondary">Kembali</a>
+    <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary">Kembali</a>
 </form>

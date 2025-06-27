@@ -1,6 +1,6 @@
 <h2>Edit Menu</h2>
 
-<form action="{{ route('menus.update', $menu->id) }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('admin.menus.update', $menu->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     <!-- Nama -->
@@ -53,5 +53,5 @@
 
     <!-- Tombol Submit -->
     <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-    <a href="{{ route('menus.index') }}" class="btn btn-secondary">Batal</a>
+    <a href="{{ route('admin.menus.index') }}" class="btn btn-secondary">Batal</a>
 </form>

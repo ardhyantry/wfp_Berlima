@@ -15,8 +15,8 @@ use App\Http\Controllers\UserController; // untuk login/register custom
 |--------------------------------------------------------------------------
 */
 Route::get('/', function () {
-    return view('public.menus.index'); // file: resources/views/public/index.blade.php
-})->name('public.home');
+    return redirect()->route('login');
+})->name('home');
 
 // Redirect root ke halaman admin/dashboard
 // Route::get('/', function () {
