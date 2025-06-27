@@ -16,7 +16,7 @@
   <title> Feane </title>
 
   <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="{{ asset('feane-1.0.0/css/bootstrap.css') }}" />
 
   <!--owl slider stylesheet -->
   <link rel="stylesheet" type="text/css"
@@ -38,15 +38,15 @@
 </head>
 
 <body>
-  {{-- <div class="hero_area"> --}}
-    {{-- <div class="bg-box">
-      <img src=" {{ asset('feane-1.0.0/images/hero-bg.jpg') }}" alt="">
-    </div> --}}
+  <div class="hero_area">
+    <div class="bg-box">
+      <img src=" {{ asset('feane-1.0.0/images/hero-bg.png') }}" alt="">
+    </div>
     <!-- header section strats -->
-    <header class="header_section">
+    <header class="header_section" style="background-color: #323d47;">
       <div class="container">
         <nav class="navbar navbar-expand-lg custom_nav-container">
-          <a class="navbar-brand" href="#">
+          <a class="navbar-brand" href="{{ route('public.home') }}">
             <span>Quick Bites</span>
           </a>
 
@@ -89,10 +89,25 @@
               </li>
             </ul>
 
-            <div class="user_option">
-              <a href="" class="user_link">
+            <div class="user_option dropdown">
+              <a href="#" class="user_link dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa fa-user" aria-hidden="true"></i>
               </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <i class="fa fa-cog me-2"></i> Setting
+                  </a>
+                </li>
+                <li>
+                  <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="dropdown-item">
+                      <i class="fa fa-sign-out me-2"></i> Logout
+                    </button>
+                  </form>
+                </li>
+              </ul>
             </div>
           </div>
         </nav>
@@ -184,7 +199,7 @@
 
     </section> --}}
     <!-- end slider section -->
-  {{-- </div> --}}
+  </div>
 
   <!-- offer section -->
 
@@ -367,11 +382,7 @@
           @yield('content')
         </div>
       </div>
-      <div class="btn-box">
-        <a href="{{ route('public.menus.index') }}">
-          View More
-        </a>
-      </div>
+      @yield('buttonViewMore')
     </div>
   </section>
 
@@ -437,7 +448,7 @@
               <a href="">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
                 <span>
-                  demo@gmail.com
+                  quickbite@gmail.com
                 </span>
               </a>
             </div>

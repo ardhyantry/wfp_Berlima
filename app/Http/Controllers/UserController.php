@@ -55,7 +55,7 @@ class UserController extends Controller
                 return redirect()->intended('/admin');
             }
 
-            return redirect()->intended(route('home'));
+            return redirect()->intended(route('public.home'));
         }
 
         return back()->withErrors([

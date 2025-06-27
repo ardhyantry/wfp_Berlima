@@ -23,7 +23,7 @@ class MenuController extends Controller
     }
     public function indexPublic()
     {
-        $listMenu = Menu::with('category')->limit(5)->get();
+        $listMenu = Menu::with('category')->limit(10)->get();
         return view('public.home', compact('listMenu'));
     }
 

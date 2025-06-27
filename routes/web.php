@@ -7,24 +7,21 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ReportController;
-use App\Http\Controllers\UserController; // untuk login/register custom
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 */
+
+
 Route::get('/', function () {
     return redirect()->route('login');
-})->name('home');
+});
 
 Route::get('/menus', [App\Http\Controllers\MenuController::class, 'index'])->name('public.menus.index');
 Route::get('/home', [App\Http\Controllers\MenuController::class, 'indexPublic'])->name('public.home');
-
-// Redirect root ke halaman admin/dashboard
-// Route::get('/', function () {
-//     return redirect('/admin');
-// });
 
 // --------------------
 // AUTH ROUTES CUSTOM

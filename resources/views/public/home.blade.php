@@ -8,7 +8,7 @@
             <div class="box shadow rounded-4 mb-4">
                 <div>
                     <div class="img-box">
-                        <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}"
+                        <img src="{{ asset('storage/' . $menu->image_path) }}" alt="{{ $menu->name }}"
                             class="img-fluid rounded-top-4">
                     </div>
                     <div class="detail-box p-3">
@@ -24,7 +24,15 @@
             </div>
         </div>
     @endforeach
+    @section('buttonViewMore')
+        <div class="btn-box">
+            <a href="{{ route('public.menus.index') }}">
+                View More
+            </a>
+        </div>
+    @endsection
 @endsection
+
 
 @push('scripts')
     <script>
