@@ -361,16 +361,27 @@
 
   <section class="food_section layout_padding-bottom">
     <div class="container">
-      @if(View::hasSection('menu_category_section'))
-      @yield('menu_category_section')
-    @endif
+      <div class="heading_container heading_center">
+        <h2>
+          Our Menu
+        </h2>
+      </div>
+
+      <ul class="filters_menu">
+        <li class="active" data-filter="*">All</li>
+        <li data-filter=".appetizer">Appetizer</li>
+        <li data-filter=".main-course">Main Course</li>
+        <li data-filter=".snacks">Snacks</li>
+        <li data-filter=".dessert">Dessert</li>
+        <li data-filter=".coffee">Coffee</li>
+        <li data-filter=".non-coffee">Non-Coffee</li>
+      </ul>
 
       <div class="filters-content">
         <div class="row grid">
           @yield('content')
         </div>
       </div>
-      @yield('cart')
       @yield('buttonViewMore')
     </div>
   </section>
