@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    // Menampilkan halaman keranjang belanja
     public function index()
     {
         $cart = session()->get('cart', []);
@@ -19,21 +18,23 @@ class CartController extends Controller
         return view('public.cart', compact('cart', 'total'));
     }
 
-    // Menambah item ke keranjang
     public function add(Menu $menu)
     {
         $cart = session()->get('cart', []);
 
+        $portionSize = 'normal';
+        $adjustedPrice = $this->adjustPrice($menu->price, $portionSize);
+
         if (isset($cart[$menu->id])) {
-            // jika item sudah ada, tambah quantity
             $cart[$menu->id]['quantity']++;
         } else {
-            // jika item baru, tambahkan ke keranjang
             $cart[$menu->id] = [
+                "id" => $menu->id,
                 "name" => $menu->name,
                 "quantity" => 1,
-                "price" => $menu->price,
-                "image_path" => $menu->image_path
+                "price" => $adjustedPrice,
+                "image_path" => $menu->image_path,
+                "portion_size" => $portionSize
             ];
         }
 
@@ -41,38 +42,52 @@ class CartController extends Controller
         return redirect()->route('cart.index')->with('success', 'Menu berhasil ditambahkan ke keranjang!');
     }
 
-    // Memperbarui quantity item
     public function update(Request $request, Menu $menu)
-    {
-        $cart = session()->get('cart', []);
-        $quantity = $request->input('quantity');
+{
+    $cart = session()->get('cart', []);
+    $quantity = $request->input('quantity');
+    $portionSize = $request->input('portion_size', 'normal');
 
-        if (isset($cart[$menu->id]) && $quantity > 0) {
-            $cart[$menu->id]['quantity'] = $quantity;
-            session()->put('cart', $cart);
-            return redirect()->route('cart.index')->with('success', 'Keranjang berhasil diperbarui.');
-        }
+    if (isset($cart[$menu->id]) && $quantity > 0) {
+        $adjustedPrice = $this->adjustPrice($menu->price, $portionSize);
 
-        return redirect()->route('cart.index')->with('error', 'Gagal memperbarui keranjang.');
+        $cart[$menu->id]['quantity'] = $quantity;
+        $cart[$menu->id]['portion_size'] = $portionSize;
+        $cart[$menu->id]['price'] = $adjustedPrice;
+        $cart[$menu->id]['id'] = $menu->id;
+
+        session()->put('cart', $cart);
+        return redirect()->route('cart.index')->with('success', 'Keranjang berhasil diperbarui.');
     }
 
-    // Menghapus item dari keranjang
-    public function remove(Menu $menu)
+    return redirect()->route('cart.index')->with('error', 'Gagal memperbarui keranjang.');
+}
+
+
+    public function remove($id)
     {
         $cart = session()->get('cart', []);
-
-        if (isset($cart[$menu->id])) {
-            unset($cart[$menu->id]);
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
             session()->put('cart', $cart);
         }
 
         return redirect()->route('cart.index')->with('success', 'Item berhasil dihapus dari keranjang.');
     }
 
-    // Mengosongkan keranjang
     public function clear()
     {
         session()->forget('cart');
         return redirect()->route('cart.index')->with('success', 'Keranjang berhasil dikosongkan.');
     }
+
+    private function adjustPrice($basePrice, $portionSize)
+    {
+        return match ($portionSize) {
+            'small' => $basePrice - 2000,
+            'large' => $basePrice + 3000,
+            default => $basePrice,
+        };
+    }
+
 }

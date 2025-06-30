@@ -25,16 +25,6 @@
                 <x-input id="phone_number" class="block mt-1 w-full" type="text" name="phone_number" :value="old('phone_number')" required />
             </div>
 
-            {{-- Role --}}
-            <div class="mt-4">
-                <x-label for="role" value="{{ __('Role') }}" />
-                <select id="role" name="role" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm">
-                    <option value="" disabled selected>Pilih role</option>
-                    <option value="customer" {{ old('role') == 'customer' ? 'selected' : '' }}>Customer</option>
-                    <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                </select>
-            </div>
-
 
             <div class="mt-4">
                 <x-label for="email" value="{{ __('Email') }}" />

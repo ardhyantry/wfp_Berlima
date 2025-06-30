@@ -9,6 +9,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,6 +44,8 @@ Route::middleware('auth')->name('cart.')->prefix('cart')->group(function () {
     Route::post('/remove/{menu}', [CartController::class, 'remove'])->name('remove'); 
     Route::post('/clear', [CartController::class, 'clear'])->name('clear');       
 });
+Route::get('/checkout', [CheckoutController::class, 'showCheckout'])->name('checkout.show');
+Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
 
 // --------------------
 // ADMIN-PROTECTED ROUTES
