@@ -85,7 +85,7 @@
                       </g>
                     </g>
                   </svg>
-                  <span id="cart-count" class="cart-count">0</span></a>
+                  <span id="cart-count" class="cart-count">{{ $cartCount ?? 0 }}</span></a>
               </li>
             </ul>
 

@@ -8,7 +8,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\CartController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,6 +33,14 @@ Route::get('/register', [UserController::class, 'registerForm'])->name('register
 Route::post('/register', [UserController::class, 'register'])->name('register.submit');
 
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+
+Route::middleware('auth')->name('cart.')->prefix('cart')->group(function () {
+    Route::get('/', [CartController::class, 'index'])->name('index');             
+    Route::post('/add/{menu}', [CartController::class, 'add'])->name('add');       
+    Route::post('/update/{menu}', [CartController::class, 'update'])->name('update'); 
+    Route::post('/remove/{menu}', [CartController::class, 'remove'])->name('remove'); 
+    Route::post('/clear', [CartController::class, 'clear'])->name('clear');       
+});
 
 // --------------------
 // ADMIN-PROTECTED ROUTES
