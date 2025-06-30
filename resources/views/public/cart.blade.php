@@ -6,10 +6,9 @@
     <section class="cart_section layout_padding" style="margin-top: 100px;">
         <div class="container">
             <div class="heading_container heading_center">
-                <h2>
-                    Keranjang Belanja Anda
-                </h2>
+                <h2>Keranjang Belanja Anda</h2>
             </div>
+
             @if(session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
@@ -31,7 +30,7 @@
                                 <th scope="col">Produk</th>
                                 <th scope="col"></th>
                                 <th scope="col" class="text-center">Harga</th>
-                                <th scope="col" class="text-center" style="width: 15%;">Jumlah</th>
+                                <th scope="col" class="text-center" style="width: 20%;">Jumlah & Ukuran</th>
                                 <th scope="col" class="text-end">Subtotal</th>
                                 <th scope="col" class="text-center">Aksi</th>
                             </tr>
@@ -44,16 +43,29 @@
                                     </td>
                                     <td>
                                         <strong>{{ $item['name'] }}</strong>
+                                        <br>
+                                        <small class="text-muted">
+                                            Ukuran: {{ ucfirst($item['portion_size'] ?? 'normal') }}
+                                        </small>
                                     </td>
                                     <td class="text-center">Rp {{ number_format($item['price'], 0, ',', '.') }}</td>
                                     <td>
-                                        <form action="{{ route('cart.update', $id) }}" method="POST" class="d-flex justify-content-center">
+                                        <form action="{{ route('cart.update', $id) }}" method="POST" class="d-flex flex-column align-items-center">
                                             @csrf
-                                            <input type="number" name="quantity" value="{{ $item['quantity'] }}" min="1" class="form-control form-control-sm text-center" style="width: 70px;">
-                                            <button type="submit" class="btn btn-sm btn-outline-primary ms-2">Update</button>
+                                            <input type="number" name="quantity" value="{{ $item['quantity'] }}" min="1" class="form-control form-control-sm text-center mb-2" style="width: 70px;">
+
+                                            <select name="portion_size" class="form-select form-select-sm mb-2" style="width: 100px;">
+                                                <option value="small" {{ ($item['portion_size'] ?? 'normal') === 'small' ? 'selected' : '' }}>Small</option>
+                                                <option value="normal" {{ ($item['portion_size'] ?? 'normal') === 'normal' ? 'selected' : '' }}>Normal</option>
+                                                <option value="large" {{ ($item['portion_size'] ?? 'normal') === 'large' ? 'selected' : '' }}>Large</option>
+                                            </select>
+
+                                            <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>
                                         </form>
                                     </td>
-                                    <td class="text-end">Rp {{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}</td>
+                                    <td class="text-end">
+                                        Rp {{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}
+                                    </td>
                                     <td class="text-center">
                                         <form action="{{ route('cart.remove', $id) }}" method="POST">
                                             @csrf
@@ -70,7 +82,9 @@
 
                 <div class="row mt-4">
                     <div class="col-md-6">
-                        <a href="{{ route('public.menus.index') }}" class="btn btn-outline-primary"><i class="fa fa-arrow-left"></i> Lanjut Belanja</a>
+                        <a href="{{ route('public.menus.index') }}" class="btn btn-outline-primary">
+                            <i class="fa fa-arrow-left"></i> Lanjut Belanja
+                        </a>
                     </div>
                     <div class="col-md-6 text-end">
                         <div class="d-flex justify-content-end align-items-center">
@@ -79,13 +93,13 @@
                                 <button type="submit" class="btn btn-warning">Kosongkan Keranjang</button>
                             </form>
 
-                            {{-- TOMBOL CHECKOUT SUDAH FUNGSIONAL --}}
-                            {{-- <form action="{{ route('checkout.process') }}" method="POST" class="d-inline">
-                                @csrf
-                                <button type="submit" class="btn btn-success">Lanjutkan ke Checkout <i class="fa fa-arrow-right"></i></button>
-                            </form> --}}
+                            <a href="{{ route('checkout.show') }}" class="btn btn-success">Lanjutkan ke Checkout <i class="fa fa-arrow-right"></i></a>
                         </div>
-                        <h4 class="mt-3">Total Belanja: <span class="text-primary">Rp {{ number_format($total, 0, ',', '.') }}</span></h4>
+                        <h4 class="mt-3">Total Belanja: 
+                            <span class="text-primary">
+                                Rp {{ number_format($total, 0, ',', '.') }}
+                            </span>
+                        </h4>
                     </div>
                 </div>
 
