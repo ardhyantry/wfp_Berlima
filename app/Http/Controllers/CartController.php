@@ -16,7 +16,7 @@ class CartController extends Controller
             $total += $item['price'] * $item['quantity'];
         }
 
-        return view('public.cart.cart', compact('cart', 'total'));
+        return view('public.cart', compact('cart', 'total'));
     }
 
     // Menambah item ke keranjang
