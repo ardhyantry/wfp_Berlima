@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -67,6 +68,14 @@ class TransactionController extends Controller
 
         $transaction->update($validated);
 
+        if ($validated['status'] === 'ready') {
+            return redirect()->route('public.menus.index')
+                ->with('success', 'Transaction updated successfully.')
+                ->with('showReadyModal', true)
+                ->with('readyTransactionId', $transaction->id)
+                ->with('order_ready', 'Pesanan Anda (ID #' . $transaction->id . ') sudah siap diambil.');
+        }
+
         return redirect()->route('admin.transactions.index')->with('success', 'Transaction updated successfully.');
     }
 
@@ -77,5 +86,43 @@ class TransactionController extends Controller
 
         return redirect()->route('admin.transactions.index')->with('success', 'Transaction deleted.');
     }
-    
+    public function updateStatusAjax(Request $request, $id)
+{
+    $transaction = Transaction::findOrFail($id);
+
+    $validated = $request->validate([
+        'status' => 'required|in:pending,processing,cancelled,ready',
+    ]);
+
+    $transaction->status = $validated['status'];
+    $transaction->save();
+    if ($transaction->status === 'ready') {
+        session()->flash('order_ready', 'Pesanan dengan ID #' . $transaction->id . ' sudah siap diambil.');
+    }
+
+    return response()->json([
+        'message' => 'Status updated successfully.',
+        'is_ready' => $transaction->status === 'ready',
+        'transaction_id' => $transaction->id,
+    ]);
+}
+    public function checkOrderStatus()
+    {
+        $userId = Auth::id();
+
+        $readyTransaction = Transaction::where('users_id', $userId)
+            ->where('status', 'ready')
+            ->latest()
+            ->first();
+
+        if ($readyTransaction) {
+            return response()->json([
+                'status' => 'ready',
+                'message' => 'Pesanan Anda dengan sudah siap diambil!'
+            ]);
+        }
+
+        return response()->json(['status' => 'none']);
+    }
+
 }
