@@ -71,11 +71,45 @@
                                             @csrf
                                             <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus item">
                                                 <i class="fa fa-trash"></i>
-                                            </button>
+                                            </button>   
+                                                <button type="button" class="btn btn-sm btn-outline-info mt-2" data-bs-toggle="modal" data-bs-target="#ingredientsModal{{ $item['id'] }}">
+                                                 Ingredients
+                                                </button>
                                         </form>
                                     </td>
                                 </tr>
                             @endforeach
+                            @foreach($cart as $id => $item)
+<!-- Modal Ingredients -->
+<div class="modal fade" id="ingredientsModal{{ $item['id'] }}" tabindex="-1" aria-labelledby="ingredientsModalLabel{{ $item['id'] }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ingredientsModalLabel{{ $item['id'] }}">Bahan - {{ $item['name'] }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    @if(isset($menus[$item['id']]))
+                        @foreach($menus[$item['id']]->ingredients as $ingredient)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="{{ $ingredient->id }}" id="ingredient{{ $item['id'] }}-{{ $ingredient->id }}" checked name="ingredients[]">
+
+                                <label class="form-check-label" for="ingredient{{ $item['id'] }}-{{ $ingredient->id }}">
+                                    {{ $ingredient->name }}
+                                </label>
+                            </div>
+                        @endforeach
+                    @else
+                        <p class="text-muted">Tidak ada data bahan tersedia.</p>
+                    @endif
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+
                         </tbody>
                     </table>
                 </div>

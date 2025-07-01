@@ -44,6 +44,8 @@ Route::middleware('auth')->name('cart.')->prefix('cart')->group(function () {
     Route::post('/update/{menu}', [CartController::class, 'update'])->name('update');
     Route::post('/remove/{menu}', [CartController::class, 'remove'])->name('remove');
     Route::post('/clear', [CartController::class, 'clear'])->name('clear');
+    Route::get('/ingredients/modal', [CartController::class, 'showIngredientsModal'])->name('ingredients.modal');
+
 });
 Route::get('/checkout', [CheckoutController::class, 'showCheckout'])->name('checkout.show');
 Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');

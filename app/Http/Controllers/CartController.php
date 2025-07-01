@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use Illuminate\Http\Request;
+use App\Models\Ingredient;
 
 class CartController extends Controller
 {
@@ -11,11 +12,13 @@ class CartController extends Controller
     {
         $cart = session()->get('cart', []);
         $total = 0;
+        $menuIds = array_keys($cart);
+        $menus = Menu::with('ingredients')->whereIn('id', $menuIds)->get()->keyBy('id');
         foreach ($cart as $item) {
             $total += $item['price'] * $item['quantity'];
         }
 
-        return view('public.cart', compact('cart', 'total'));
+        return view('public.cart', compact('cart', 'total','menus'));
     }
 
     public function add(Menu $menu)
