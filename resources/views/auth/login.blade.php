@@ -46,23 +46,12 @@
                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-indigo-200">
                 </div>
 
-                {{-- Remember Me --}}
-                <div class="mb-4 flex items-center">
-                    <input id="remember" type="checkbox" name="remember" class="mr-2">
-                    <label for="remember" class="text-sm text-gray-700">Remember Me</label>
-                </div>
-
                 <div class="flex items-center justify-between">
                     <button type="submit"
                             class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded">
                         Login
                     </button>
 
-                    @if (Route::has('password.request'))
-                        <a class="text-sm text-indigo-600 hover:underline" href="{{ route('password.request') }}">
-                            Forgot your password?
-                        </a>
-                    @endif
                 </div>
             </form>
             <div class="mt-6 text-center">
