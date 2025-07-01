@@ -42,32 +42,7 @@
         </div>
     @endif
 
-    <div class="modal fade" id="ingredientModal" tabindex="-1" aria-labelledby="ingredientModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="ingredientModalLabel">Pilih Bahan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form method="GET" action="{{ route('menu.filter') }}">
-                    <div class="modal-body">
-                        @foreach($ingredients as $ingredient)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="ingredients[]"
-                                    value="{{ $ingredient->id }}" id="ingredient{{ $ingredient->id }}">
-                                <label class="form-check-label" for="ingredient{{ $ingredient->id }}">
-                                    {{ $ingredient->name }}
-                                </label>
-                            </div>
-                        @endforeach
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Filter</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+ 
 
     @foreach ($listMenu as $menu)
         <div class="col-sm-6 col-lg-4 all {{ strtolower(str_replace(' ', '-', $menu->category->name)) }}">

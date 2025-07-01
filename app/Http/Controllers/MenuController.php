@@ -149,16 +149,4 @@ class MenuController extends Controller
 
         return view('public.menus.index', compact('listMenu'));
     }
-    public function filter(Request $request)
-{
-    $ingredientIds = $request->input('ingredients', []);
-
-    $listMenu = Menu::whereHas('ingredients', function ($query) use ($ingredientIds) {
-        $query->whereIn('ingredients.id', $ingredientIds);
-    })->with('category')->get();
-
-    $ingredients = Ingredient::all();
-
-    return view('public.menus.index', compact('listMenu', 'ingredients'));
-}
 }

@@ -25,7 +25,6 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/menus', [App\Http\Controllers\MenuController::class, 'index'])->name('public.menus.index');
     Route::get('/home', [App\Http\Controllers\MenuController::class, 'indexPublic'])->name('public.home');
-    Route::get('/menu/filter', [MenuController::class, 'filter'])->name('menu.filter');
 });
 
 // --------------------
