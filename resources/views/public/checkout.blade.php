@@ -2,7 +2,7 @@
 
 @section('title', 'Checkout')
 
-@section('content')
+@section('cart')
 <section class="cart_section layout_padding" style="margin-top: 100px;">
     <div class="container">
         <div class="heading_container heading_center">
