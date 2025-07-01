@@ -23,25 +23,19 @@
             </div>
         </div>
     </section>
+
+    @if(session('success'))
+        <div class="container mt-3">
+            <div class="alert alert-success alert-dismissible fade show mx-auto shadow" role="alert"
+                style="max-width: 600px; position: sticky; top: 80px; z-index: 1050;">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
 @endsection
 
 @section('content')
-
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="flex-grow-1 text-center">Our Menu</h2>
-        <button class="btn btn-outline-primary me-3" data-bs-toggle="modal" data-bs-target="#ingredientModal">
-            Ingredients
-        </button>
-    </div>
-
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert"
-            style="position: sticky; top: 80px; z-index: 1050; margin: 0 15px;">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-
     @foreach ($listMenu as $menu)
         <div class="col-sm-6 col-lg-4 all {{ strtolower(str_replace(' ', '-', $menu->category->name)) }}">
             <div class="box shadow rounded-4 mb-4" data-bs-toggle="modal" data-bs-target="#menuModal{{ $menu->id }}">
@@ -88,7 +82,6 @@
 
                             <form action="{{ route('cart.add', $menu->id) }}" method="POST">
                                 @csrf
-                                <!-- Customization fields bisa ditambahkan di sini -->
                                 <button type="submit" class="btn btn-primary mt-2">
                                     <i class="fa fa-shopping-cart me-1"></i> Tambah ke Keranjang
                                 </button>
