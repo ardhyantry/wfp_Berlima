@@ -58,21 +58,23 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="#">Home</a>
+                <a class="nav-link" href="{{ route('public.home') }}">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{ route('public.menus.index') }}">Menu</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="">About</a>
+                <a class="nav-link" href="#about-section">About</a>
               </li>
               <li>
-                <a class="cart_link" href="#">
-                  <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-                    y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                <a class="cart_link" href="{{ route('cart.index') }}">
+                  <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029"
+                    style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                     <g>
                       <g>
-                        <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                        <path
+                          d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
                                          c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z" />
                       </g>
                     </g>
@@ -90,15 +92,16 @@
             </ul>
 
             <div class="user_option dropdown">
-              <a href="#" class="user_link dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <a href="#" class="user_link dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown"
+                aria-expanded="false">
                 <i class="fa fa-user" aria-hidden="true"></i>
               </a>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                <li>
+                {{-- <li>
                   <a class="dropdown-item" href="#">
                     <i class="fa fa-cog me-2"></i> Setting
                   </a>
-                </li>
+                </li> --}}
                 <li>
                   <form method="POST" action="{{ route('logout') }}">
                     @csrf
@@ -361,27 +364,15 @@
 
   <section class="food_section layout_padding-bottom">
     <div class="container">
-      <div class="heading_container heading_center">
-        <h2>
-          Our Menu
-        </h2>
-      </div>
-
-      <ul class="filters_menu">
-        <li class="active" data-filter="*">All</li>
-        <li data-filter=".appetizer">Appetizer</li>
-        <li data-filter=".main-course">Main Course</li>
-        <li data-filter=".snacks">Snacks</li>
-        <li data-filter=".dessert">Dessert</li>
-        <li data-filter=".coffee">Coffee</li>
-        <li data-filter=".non-coffee">Non-Coffee</li>
-      </ul>
-
+      @if(View::hasSection('menu_category_section'))
+        @yield('menu_category_section')
+      @endif
       <div class="filters-content">
         <div class="row grid">
           @yield('content')
         </div>
       </div>
+      @yield('cart')
       @yield('buttonViewMore')
     </div>
   </section>
