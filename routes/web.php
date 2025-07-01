@@ -19,13 +19,13 @@ use App\Http\Controllers\CheckoutController;
 
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect()->route('public.home');
 });
 
 Route::middleware('auth')->group(function () {
     Route::get('/menus', [App\Http\Controllers\MenuController::class, 'index'])->name('public.menus.index');
-    Route::get('/home', [App\Http\Controllers\MenuController::class, 'indexPublic'])->name('public.home');
 });
+Route::get('/home', [App\Http\Controllers\MenuController::class, 'indexPublic'])->name('public.home');
 
 // --------------------
 // AUTH ROUTES CUSTOM
