@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Menu;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\Ingredient;                  
 
 class MenuController extends Controller
 {
@@ -14,11 +15,11 @@ class MenuController extends Controller
     public function index()
     {
         $listMenu = Menu::with('category')->get();
-
+        $ingredients = Ingredient::all(); 
         if (auth()->check() && auth()->user()->isAdmin()) {
-            return view('admin.menus.index', compact('listMenu'));
+            return view('admin.menus.index', compact('listMenu'));                      
         } else {
-            return view('public.menus.index', compact('listMenu'));
+            return view('public.menus.index', compact('listMenu', 'ingredients'));
         }
     }
     public function indexPublic()
@@ -105,7 +106,7 @@ class MenuController extends Controller
 
         return redirect()->route('admin.menus.index')->with('success', 'Menu berhasil diupdate!');
     }
-
+    
     /**
      * Remove the specified resource from storage.
      */
@@ -148,4 +149,16 @@ class MenuController extends Controller
 
         return view('public.menus.index', compact('listMenu'));
     }
+    public function filter(Request $request)
+{
+    $ingredientIds = $request->input('ingredients', []);
+
+    $listMenu = Menu::whereHas('ingredients', function ($query) use ($ingredientIds) {
+        $query->whereIn('ingredients.id', $ingredientIds);
+    })->with('category')->get();
+
+    $ingredients = Ingredient::all();
+
+    return view('public.menus.index', compact('listMenu', 'ingredients'));
+}
 }

@@ -35,4 +35,5 @@ class Menu extends Model
     {
         return $this->hasMany(Order::class, 'menus_id');
     }
+    
 }
