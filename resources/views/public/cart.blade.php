@@ -45,7 +45,7 @@
                                         <strong>{{ $item['name'] }}</strong>
                                         <br>
                                         <small class="text-muted">
-                                            Ukuran: {{ ucfirst($item['portion_size'] ?? 'normal') }}
+                                            Ukuran: {{ ucfirst($item['portion_size'] ?? 'medium') }}
                                         </small>
                                     </td>
                                     <td class="text-center">Rp {{ number_format($item['price'], 0, ',', '.') }}</td>
@@ -55,9 +55,9 @@
                                             <input type="number" name="quantity" value="{{ $item['quantity'] }}" min="1" class="form-control form-control-sm text-center mb-2" style="width: 70px;">
 
                                             <select name="portion_size" class="form-select form-select-sm mb-2" style="width: 100px;">
-                                                <option value="small" {{ ($item['portion_size'] ?? 'normal') === 'small' ? 'selected' : '' }}>Small</option>
-                                                <option value="normal" {{ ($item['portion_size'] ?? 'normal') === 'normal' ? 'selected' : '' }}>Normal</option>
-                                                <option value="large" {{ ($item['portion_size'] ?? 'normal') === 'large' ? 'selected' : '' }}>Large</option>
+                                                <option value="small" {{ ($item['portion_size'] ?? 'medium') === 'small' ? 'selected' : '' }}>Small</option>
+                                                <option value="medium" {{ ($item['portion_size'] ?? 'medium') === 'medium' ? 'selected' : '' }}>Normal</option>
+                                                <option value="large" {{ ($item['portion_size'] ?? 'medium') === 'large' ? 'selected' : '' }}>Large</option>
                                             </select>
 
                                             <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>
@@ -78,38 +78,49 @@
                                         </form>
                                     </td>
                                 </tr>
+                                <div class="modal fade" id="ingredientsModal{{ $item['id'] }}" tabindex="-1" aria-labelledby="ingredientsModalLabel{{ $item['id'] }}" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="ingredientsModalLabel{{ $item['id'] }}">Bahan - {{ $item['name'] }}</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form class="ingredient-form" data-id="{{ $item['id'] }}">
+                                
+                                                    <input type="hidden" name="menu_id" value="{{ $item['id'] }}">
+                                                
+                                                    @csrf
+                                                    @php
+                                                    $selectedIngredients = $item['selected_ingredients'] ?? $menus[$item['id']]->ingredients->pluck('id')->toArray();
+                                                    @endphp
+                                                    @if(isset($menus[$item['id']]))
+                                                    @foreach($menus[$item['id']]->ingredients as $ingredient)
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="{{ $ingredient->id }}"
+                                                            id="ingredient{{ $item['id'] }}-{{ $ingredient->id }}"
+                                                            name="ingredients[]"
+                                                            {{ in_array($ingredient->id, $selectedIngredients) ? 'checked' : '' }}>
+                                                        <label class="form-check-label" for="ingredient{{ $item['id'] }}-{{ $ingredient->id }}">
+                                                            {{ $ingredient->name }}
+                                                        </label>
+                                                    </div>
+                                                    @endforeach
+                                                    @else
+                                                        <p class="text-muted">Tidak ada data bahan tersedia.</p>
+                                                    @endif
+                                            
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
-                            @foreach($cart as $id => $item)
-<!-- Modal Ingredients -->
-<div class="modal fade" id="ingredientsModal{{ $item['id'] }}" tabindex="-1" aria-labelledby="ingredientsModalLabel{{ $item['id'] }}" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ingredientsModalLabel{{ $item['id'] }}">Bahan - {{ $item['name'] }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    @if(isset($menus[$item['id']]))
-                        @foreach($menus[$item['id']]->ingredients as $ingredient)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="{{ $ingredient->id }}" id="ingredient{{ $item['id'] }}-{{ $ingredient->id }}" checked name="ingredients[]">
-
-                                <label class="form-check-label" for="ingredient{{ $item['id'] }}-{{ $ingredient->id }}">
-                                    {{ $ingredient->name }}
-                                </label>
-                            </div>
-                        @endforeach
-                    @else
-                        <p class="text-muted">Tidak ada data bahan tersedia.</p>
-                    @endif
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-@endforeach
-
                         </tbody>
                     </table>
                 </div>
@@ -146,3 +157,43 @@
         </div>
     </section>
 @endsection
+@push('scripts')
+<script>
+document.querySelectorAll('.ingredient-form').forEach(form => {
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const menuId = this.dataset.id;
+        const formData = new FormData(this);
+
+        console.log("Saving ingredients for menu_id =", menuId);
+
+        fetch("{{ route('cart.save.ingredients') }}", {
+            method: "POST",
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log('Success:', data);
+
+            const modal = bootstrap.Modal.getInstance(document.getElementById('ingredientsModal' + menuId));
+            if (modal) modal.hide();
+
+            const toast = document.createElement('div');
+            toast.className = 'alert alert-success position-fixed top-0 end-0 m-3';
+            toast.innerText = data.message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
+        })
+        .catch(err => {
+            alert("Gagal menyimpan bahan!");
+            console.error('Fetch error:', err);
+        });
+    });
+});
+</script>
+@endpush
+

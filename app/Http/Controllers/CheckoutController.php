@@ -44,7 +44,7 @@ class CheckoutController extends Controller
                 $subtotal += $item['price'] * $item['quantity'];
             }
 
-            $discount = 0; // bisa kamu kembangkan
+            $discount = 0;
             $total = $subtotal - $discount;
 
             $transaction = Transaction::create([
@@ -60,13 +60,31 @@ class CheckoutController extends Controller
             ]);
 
             foreach ($cart as $item) {
+                $menuId = $item['id'];
+                $selectedIngredients = array_map('intval', $item['selected_ingredients'] ?? []);
+                $defaultIngredients = DB::table('menus_has_ingredients')
+                    ->where('menus_id', $menuId)
+                    ->pluck('ingredients_id')
+                    ->toArray();
+
+                $uncheckedIngredients = array_diff($defaultIngredients, $selectedIngredients);
+                $notes = null;
+                if (!empty($uncheckedIngredients)) {
+                    $notes = "Tanpa ";
+                    $notes =$notes.DB::table('ingredients')
+                        ->whereIn('id', $uncheckedIngredients)
+                        ->pluck('name')
+                        ->implode(', ');
+                        
+                }
+
                 Order::create([
                     'transactions_id' => $transaction->id,
-                    'menus_id' => $item['id'],
+                    'menus_id' => $menuId,
                     'portion_size' => $item['portion_size'] ?? 'medium',
                     'quantity' => $item['quantity'],
                     'total' => $item['price'] * $item['quantity'],
-                    'notes' => $item['notes'] ?? null,
+                    'notes' => $notes,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
