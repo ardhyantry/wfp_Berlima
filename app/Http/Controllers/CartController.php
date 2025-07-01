@@ -18,7 +18,7 @@ class CartController extends Controller
             $total += $item['price'] * $item['quantity'];
         }
 
-        return view('public.cart', compact('cart', 'total','menus'));
+        return view('public.cart', compact('cart', 'total', 'menus'));
     }
 
     public function add(Menu $menu)
@@ -42,29 +42,29 @@ class CartController extends Controller
         }
 
         session()->put('cart', $cart);
-        return redirect()->route('cart.index')->with('success', 'Menu berhasil ditambahkan ke keranjang!');
+        return redirect()->back()->with('success', 'Menu berhasil ditambahkan ke keranjang!');
     }
 
     public function update(Request $request, Menu $menu)
-{
-    $cart = session()->get('cart', []);
-    $quantity = $request->input('quantity');
-    $portionSize = $request->input('portion_size', 'normal');
+    {
+        $cart = session()->get('cart', []);
+        $quantity = $request->input('quantity');
+        $portionSize = $request->input('portion_size', 'normal');
 
-    if (isset($cart[$menu->id]) && $quantity > 0) {
-        $adjustedPrice = $this->adjustPrice($menu->price, $portionSize);
+        if (isset($cart[$menu->id]) && $quantity > 0) {
+            $adjustedPrice = $this->adjustPrice($menu->price, $portionSize);
 
-        $cart[$menu->id]['quantity'] = $quantity;
-        $cart[$menu->id]['portion_size'] = $portionSize;
-        $cart[$menu->id]['price'] = $adjustedPrice;
-        $cart[$menu->id]['id'] = $menu->id;
+            $cart[$menu->id]['quantity'] = $quantity;
+            $cart[$menu->id]['portion_size'] = $portionSize;
+            $cart[$menu->id]['price'] = $adjustedPrice;
+            $cart[$menu->id]['id'] = $menu->id;
 
-        session()->put('cart', $cart);
-        return redirect()->route('cart.index')->with('success', 'Keranjang berhasil diperbarui.');
+            session()->put('cart', $cart);
+            return redirect()->route('cart.index')->with('success', 'Keranjang berhasil diperbarui.');
+        }
+
+        return redirect()->route('cart.index')->with('error', 'Gagal memperbarui keranjang.');
     }
-
-    return redirect()->route('cart.index')->with('error', 'Gagal memperbarui keranjang.');
-}
 
 
     public function remove($id)

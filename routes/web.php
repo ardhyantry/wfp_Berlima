@@ -49,6 +49,8 @@ Route::middleware('auth')->name('cart.')->prefix('cart')->group(function () {
 });
 Route::get('/checkout', [CheckoutController::class, 'showCheckout'])->name('checkout.show');
 Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
+Route::post('/admin/transactions/{id}/update-status', [TransactionController::class, 'updateStatusAjax'])->name('admin.transactions.updateStatus');
+Route::get('/check-order-status', [TransactionController::class, 'checkOrderStatus'])->name('order.checkStatus');
 
 // --------------------
 // ADMIN-PROTECTED ROUTES
