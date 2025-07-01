@@ -14,10 +14,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        // Fetch all orders from the database
-        $orders = Order::all();
-
-        // Return a view with the orders data
+        $orders = Order::with(['transaction.user', 'menu'])->get();
         return view('admin.orders.index', compact('orders'));
     }
 
@@ -48,7 +45,7 @@ class OrderController extends Controller
 
         Order::create($validated);
 
-        return redirect()->route('admin.orders.index')->with('success', 'Order berhasil ditambahkan!');
+        return redirect()->route('admin.order.index')->with('success', 'Order berhasil ditambahkan!');
     }
 
     /**
@@ -90,7 +87,7 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
         $order->update($validated);
 
-        return redirect()->route('admin.orders.index')->with('success', 'Order berhasil diperbarui!');
+        return redirect()->route('admin.order.index')->with('success', 'Order berhasil diperbarui!');
     
     }
 
@@ -102,6 +99,6 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
         $order->delete();
 
-        return redirect()->route('admin.orders.index')->with('success', 'Order deleted successfully.');
+        return redirect()->route('admin.order.index')->with('success', 'Order deleted successfully.');
     }
 }

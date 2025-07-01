@@ -26,7 +26,6 @@
 
 @section('content')
 <div class="container">
-    {{-- ALERT UNTUK ORDER READY --}}
     <div id="order-ready-alert" class="alert alert-success text-center d-none"></div>
 
     <div class="row grid">

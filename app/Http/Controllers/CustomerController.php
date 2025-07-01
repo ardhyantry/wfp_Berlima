@@ -55,7 +55,7 @@ class CustomerController extends Controller
             'role' => 'customer',
         ]);
 
-        return redirect()->route('customers.index')->with('success', 'Customer created successfully.');
+        return redirect()->route('admin.customers.index')->with('success', 'Customer created successfully.');
     }
 
     /**
@@ -99,7 +99,7 @@ class CustomerController extends Controller
 
         $user->update($validated);
 
-        return redirect()->route('customers.index')->with('success', 'Customer berhasil diupdate!');
+        return redirect()->route('admin.customers.index')->with('success', 'Customer berhasil diupdate!');
     }
 
     /**
@@ -111,6 +111,6 @@ class CustomerController extends Controller
     
         $user->delete();
 
-        return redirect()->route('customers.index')->with('success', 'Customer berhasil dihapus!');
+        return redirect()->route('admin.customers.index')->with('success', 'Customer berhasil dihapus!');
     }
 }

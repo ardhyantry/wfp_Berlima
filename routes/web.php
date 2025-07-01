@@ -51,7 +51,7 @@ Route::get('/checkout', [CheckoutController::class, 'showCheckout'])->name('chec
 Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout.process');
 Route::post('/admin/transactions/{id}/update-status', [TransactionController::class, 'updateStatusAjax'])->name('admin.transactions.updateStatus');
 Route::get('/check-order-status', [TransactionController::class, 'checkOrderStatus'])->name('order.checkStatus');
-
+Route::post('/cart/save-ingredients', [CartController::class, 'saveIngredients'])->name('cart.save.ingredients');
 // --------------------
 // ADMIN-PROTECTED ROUTES
 // --------------------

@@ -15,7 +15,7 @@ class UserController extends Controller
     }
     public function registerForm()
     {
-    return view('auth.register'); // pastikan file ini ada di resources/views/auth/register.blade.php
+    return view('auth.register'); 
     }
 
     public function register(Request $request)
@@ -49,7 +49,6 @@ class UserController extends Controller
         if (Auth::attempt($credentials, $request->remember)) {
             $request->session()->regenerate();
 
-            // Redirect sesuai role
             if (Auth::user()->role === 'admin') {
                 return redirect()->intended('/admin');
             }

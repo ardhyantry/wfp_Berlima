@@ -25,7 +25,7 @@ class CartController extends Controller
     {
         $cart = session()->get('cart', []);
 
-        $portionSize = 'normal';
+        $portionSize = 'medium';
         $adjustedPrice = $this->adjustPrice($menu->price, $portionSize);
 
         if (isset($cart[$menu->id])) {
@@ -49,7 +49,7 @@ class CartController extends Controller
     {
         $cart = session()->get('cart', []);
         $quantity = $request->input('quantity');
-        $portionSize = $request->input('portion_size', 'normal');
+        $portionSize = $request->input('portion_size', 'medium');
 
         if (isset($cart[$menu->id]) && $quantity > 0) {
             $adjustedPrice = $this->adjustPrice($menu->price, $portionSize);
@@ -92,5 +92,27 @@ class CartController extends Controller
             default => $basePrice,
         };
     }
+    public function saveIngredients(Request $request)
+    {
+        $cart = session('cart', []);
+        $menuId = $request->menu_id;
 
+        $selectedIngredients = array_filter($request->input('ingredients', []), function ($value) {
+            return is_numeric($value) && (int) $value > 0;
+        });
+
+        $selectedIngredients = array_map('intval', $selectedIngredients);
+
+        if (!empty($cart)) {
+            foreach ($cart as $key => $item) {
+                if ($item['id'] == $menuId) {
+                    $cart[$key]['selected_ingredients'] = $selectedIngredients;
+                    break;
+                }
+            }
+            session(['cart' => $cart]);
+        }
+
+        return response()->json(['message' => 'Bahan berhasil disimpan!']);
+    }
 }
