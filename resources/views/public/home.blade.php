@@ -38,7 +38,7 @@
                                 <img src="{{ asset('storage/' . $menu->image_path) }}" alt="{{ $menu->name }}"
                                     class="img-fluid rounded-top-4">
                             </div>
-                            <div class="detail-box p-3">
+                            <div class="detail-box p-3">2   qw
                                 <h5>{{ $menu->name }}</h5>
                                 <p>{{ $menu->description }}</p>
                                 <small class="text-muted d-block mb-2">{{ $menu->nutrition_fact ?? 'No nutrition info' }}</small>
