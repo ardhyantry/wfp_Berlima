@@ -86,16 +86,9 @@ class CustomerController extends Controller
             'email'        => 'required|email|unique:users,email,'.$id,
             'phone_number' => 'required|string|max:25',
             'username'     => 'required|string|max:45|unique:users,username,'.$id,
-            'password'     => 'nullable|string|min:6',
         ]);
 
         $user = User::findOrFail($id);
-
-        if ($validated['password']) {
-            $validated['password'] = Hash::make($validated['password']);
-        } else {
-            unset($validated['password']);
-        }
 
         $user->update($validated);
 
