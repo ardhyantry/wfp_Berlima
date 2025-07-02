@@ -13,12 +13,12 @@
             <div class="filters-content">
                 <ul class="filters_menu list-inline text-center mb-4">
                     <li class="list-inline-item btn btn-dark active" data-filter="*">All</li>
-                    <li class="list-inline-item btn btn-outline-dark" data-filter=".appetizer">Appetizer</li>
-                    <li class="list-inline-item btn btn-outline-dark" data-filter=".main-course">Main Course</li>
-                    <li class="list-inline-item btn btn-outline-dark" data-filter=".snacks">Snacks</li>
-                    <li class="list-inline-item btn btn-outline-dark" data-filter=".dessert">Dessert</li>
-                    <li class="list-inline-item btn btn-outline-dark" data-filter=".coffee">Coffee</li>
-                    <li class="list-inline-item btn btn-outline-dark" data-filter=".non-coffee">Non-Coffee</li>
+                    @foreach ($categories as $category)
+                        <li class="list-inline-item btn btn-outline-dark"
+                            data-filter=".{{ strtolower(str_replace(' ', '-', $category->name)) }}">
+                            {{ $category->name }}
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
@@ -95,6 +95,8 @@
 @endsection
 
 @push('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
     <script>
         $(document).ready(function () {
             var $grid = $('.grid').isotope({
