@@ -44,8 +44,6 @@ class CustomerController extends Controller
             'username'     => 'required|string|max:45|unique:users,username',
             'password'     => 'required|string|min:6',
         ]);
-
-        //create user
         User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
