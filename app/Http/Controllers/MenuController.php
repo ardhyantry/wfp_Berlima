@@ -16,10 +16,11 @@ class MenuController extends Controller
     {
         $listMenu = Menu::with('category')->get();
         $ingredients = Ingredient::all(); 
+        $categories = Category::all();
         if (auth()->check() && auth()->user()->isAdmin()) {
             return view('admin.menus.index', compact('listMenu'));                      
         } else {
-            return view('public.menus.index', compact('listMenu', 'ingredients'));
+            return view('public.menus.index', compact('listMenu', 'ingredients','categories'));
         }
     }
     public function indexPublic()
