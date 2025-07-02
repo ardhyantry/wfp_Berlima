@@ -39,11 +39,6 @@
                 <input type="text" class="form-control" id="username" name="username" value="{{ old('username', $user->username) }}" required>
             </div>
 
-            <div class="mb-3">
-                <label for="password" class="form-label">Password (Kosongkan jika tidak ingin diubah)</label>
-                <input type="password" class="form-control" id="password" name="password">
-            </div>
-
             <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
             <a href="{{ route('admin.customers.index') }}" class="btn btn-secondary">Kembali</a>
         </form>
